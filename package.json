@@ -13,15 +13,18 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
+    "i18next": "^25.2.1",
     "next": "latest",
+    "next-i18next": "^15.4.2",
+    "postcss": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "typescript": "latest",
-    "@types/react": "latest",
-    "@types/node": "latest",
-    "@types/react-dom": "latest",
+    "react-i18next": "^15.5.2",
     "tailwindcss": "latest",
-    "postcss": "latest",
-    "autoprefixer": "latest"
+    "typescript": "latest"
   }
 }
