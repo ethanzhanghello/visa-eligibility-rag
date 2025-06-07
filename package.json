@@ -20,11 +20,14 @@
     "i18next": "^25.2.1",
     "next": "latest",
     "next-i18next": "^15.4.2",
-    "postcss": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-i18next": "^15.5.2",
     "tailwindcss": "latest",
     "typescript": "latest"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss7-compat": "^2.2.17",
+    "postcss": "^8.5.4"
   }
 }
