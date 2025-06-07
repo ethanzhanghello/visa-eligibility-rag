@@ -1,0 +1,40 @@
+{
+  "faqs": [
+    {
+      "id": "doc001",
+      "language": "en",
+      "question": "What is Form I-485?",
+      "answer": "Form I-485, Application to Register Permanent Residence or Adjust Status, is used to apply for adjustment of status to a green card. This form is used when you are already in the United States and want to change your immigration status to that of a permanent resident."
+    },
+    {
+      "id": "doc001-zh",
+      "language": "zh",
+      "question": "什么是I-485表格？",
+      "answer": "I-485表格，即永久居留权登记或调整身份申请表，用于申请调整身份以获得绿卡。当您已经在美国境内并希望将您的移民身份更改为永久居民时，使用此表格。"
+    },
+    {
+      "id": "doc002",
+      "language": "en",
+      "question": "What is a Green Card?",
+      "answer": "A Green Card (officially known as a Permanent Resident Card) is a document that proves you have been granted authorization to live and work permanently in the United States. It serves as proof of your permanent resident status."
+    },
+    {
+      "id": "doc002-zh",
+      "language": "zh",
+      "question": "什么是绿卡？",
+      "answer": "绿卡（正式名称为永久居民卡）是一份证明您已获得在美国永久居住和工作授权的文件。它作为您永久居民身份的证明。"
+    },
+    {
+      "id": "doc003",
+      "language": "en",
+      "question": "What are the main eligibility categories for a Green Card?",
+      "answer": "The main categories for Green Card eligibility include: 1) Family-based immigration (spouses, children, parents of U.S. citizens), 2) Employment-based immigration (workers with specific skills or job offers), 3) Refugee or Asylee status, 4) Special immigrant categories, and 5) Diversity Visa Program."
+    },
+    {
+      "id": "doc003-zh",
+      "language": "zh",
+      "question": "绿卡的主要资格类别有哪些？",
+      "answer": "绿卡资格的主要类别包括：1）家庭移民（美国公民的配偶、子女、父母），2）就业移民（具有特定技能或工作机会的工人），3）难民或庇护身份，4）特殊移民类别，以及5）多元化签证计划。"
+    }
+  ]
+} 
