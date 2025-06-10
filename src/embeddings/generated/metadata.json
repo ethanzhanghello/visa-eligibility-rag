@@ -1,0 +1,533 @@
+{
+  "faqs": [
+    {
+      "id": "what-is-i485",
+      "language": "en",
+      "question": "What is Form I-485?",
+      "answer": "Form I-485, Application to Register Permanent Residence or Adjust Status, is the form used to apply for a Green Card (permanent residence) while in the United States. It's used when you're already in the U.S. and want to change your status to permanent resident."
+    },
+    {
+      "id": "what-is-i485",
+      "language": "zh",
+      "question": "什么是I-485表格？",
+      "answer": "I-485表格，即永久居留权或调整身份申请，是用于在美国境内申请绿卡（永久居留权）的表格。当您已经在美国并希望将身份更改为永久居民时使用此表格。"
+    },
+    {
+      "id": "what-is-green-card",
+      "language": "en",
+      "question": "What is a Green Card?",
+      "answer": "A Green Card (officially known as a Permanent Resident Card) is an identification document that proves you have permanent resident status in the United States. It allows you to live and work permanently in the U.S. and provides a path to citizenship."
+    },
+    {
+      "id": "what-is-green-card",
+      "language": "zh",
+      "question": "什么是绿卡？",
+      "answer": "绿卡（正式名称为永久居民卡）是一种身份证明文件，证明您在美国拥有永久居民身份。它允许您在美国永久居住和工作，并为获得公民身份提供途径。"
+    },
+    {
+      "id": "eligibility-categories",
+      "language": "en",
+      "question": "What are the main categories for Green Card eligibility?",
+      "answer": "The main categories include: 1) Family-based immigration (spouses, children, parents, siblings of U.S. citizens or permanent residents), 2) Employment-based immigration (EB-1 through EB-5), 3) Special categories (refugees, asylees, victims of trafficking), 4) Diversity Visa Program, and 5) Other special programs."
+    },
+    {
+      "id": "eligibility-categories",
+      "language": "zh",
+      "question": "绿卡资格的主要类别有哪些？",
+      "answer": "主要类别包括：1）家庭移民（美国公民或永久居民的配偶、子女、父母、兄弟姐妹），2）就业移民（EB-1至EB-5），3）特殊类别（难民、庇护者、人口贩运受害者），4）多元化签证计划，以及5）其他特殊项目。"
+    },
+    {
+      "id": "family-based-categories",
+      "language": "en",
+      "question": "What are the family-based immigration categories?",
+      "answer": "Family-based categories include: F1 (Unmarried sons and daughters of U.S. citizens), F2A (Spouses and children of permanent residents), F2B (Unmarried sons and daughters of permanent residents), F3 (Married sons and daughters of U.S. citizens), and F4 (Brothers and sisters of U.S. citizens). Each category has different waiting times and requirements."
+    },
+    {
+      "id": "family-based-categories",
+      "language": "zh",
+      "question": "家庭移民类别有哪些？",
+      "answer": "家庭移民类别包括：F1（美国公民的未婚子女），F2A（永久居民的配偶和子女），F2B（永久居民的未婚子女），F3（美国公民的已婚子女），以及F4（美国公民的兄弟姐妹）。每个类别都有不同的等待时间和要求。"
+    },
+    {
+      "id": "employment-categories",
+      "language": "en",
+      "question": "What are the employment-based immigration categories?",
+      "answer": "Employment-based categories include: EB-1 (Priority Workers), EB-2 (Professionals with Advanced Degrees), EB-3 (Skilled Workers and Professionals), EB-4 (Special Immigrants), and EB-5 (Immigrant Investors). Each category has specific requirements and annual quotas."
+    },
+    {
+      "id": "employment-categories",
+      "language": "zh",
+      "question": "就业移民类别有哪些？",
+      "answer": "就业移民类别包括：EB-1（优先工作者），EB-2（具有高级学位的专业人士），EB-3（技术工人和专业人士），EB-4（特殊移民），以及EB-5（投资移民）。每个类别都有特定的要求和年度配额。"
+    },
+    {
+      "id": "required-documents",
+      "language": "en",
+      "question": "What documents are required for a Green Card application?",
+      "answer": "Required documents typically include: 1) Valid passport, 2) Birth certificate, 3) Marriage certificate (if applicable), 4) Divorce decrees (if applicable), 5) Police certificates, 6) Medical examination results, 7) Affidavit of support (if required), 8) Employment authorization documents, 9) Tax returns, and 10) Proof of relationship (for family-based applications)."
+    },
+    {
+      "id": "required-documents",
+      "language": "zh",
+      "question": "绿卡申请需要哪些文件？",
+      "answer": "所需文件通常包括：1）有效护照，2）出生证明，3）结婚证书（如适用），4）离婚判决书（如适用），5）警察证明，6）体检结果，7）经济担保书（如需要），8）工作授权文件，9）纳税申报表，以及10）关系证明（用于家庭移民申请）。"
+    },
+    {
+      "id": "processing-times",
+      "language": "en",
+      "question": "How long does the Green Card process take?",
+      "answer": "Processing times vary significantly based on the category and country of origin. Family-based applications can take 1-10 years, employment-based applications 1-3 years, and special categories may have different timelines. The process includes petition approval, visa availability, and adjustment of status or consular processing."
+    },
+    {
+      "id": "processing-times",
+      "language": "zh",
+      "question": "绿卡处理需要多长时间？",
+      "answer": "处理时间因类别和原籍国而异。家庭移民申请可能需要1-10年，就业移民申请需要1-3年，特殊类别可能有不同的时间表。该过程包括申请批准、签证可用性以及身份调整或领事处理。"
+    },
+    {
+      "id": "fees",
+      "language": "en",
+      "question": "What are the fees for Green Card applications?",
+      "answer": "Fees include: 1) I-485 filing fee ($1,140), 2) Biometric services fee ($85), 3) Medical examination costs (varies), 4) Translation costs (if needed), 5) Attorney fees (if using one), and 6) Additional fees for dependent family members. Fee waivers may be available for certain applicants."
+    },
+    {
+      "id": "fees",
+      "language": "zh",
+      "question": "绿卡申请的费用是多少？",
+      "answer": "费用包括：1）I-485申请费（1,140美元），2）生物识别服务费（85美元），3）体检费用（因地区而异），4）翻译费用（如需要），5）律师费（如使用），以及6）家属的额外费用。某些申请人可能有资格获得费用减免。"
+    },
+    {
+      "id": "interview-preparation",
+      "language": "en",
+      "question": "How should I prepare for the Green Card interview?",
+      "answer": "Preparation includes: 1) Review all application materials, 2) Bring original documents and copies, 3) Practice interview questions, 4) Arrive early, 5) Dress appropriately, 6) Bring an interpreter if needed, 7) Be honest and consistent in answers, 8) Bring evidence of relationship (if applicable), and 9) Be prepared to discuss your background and intentions."
+    },
+    {
+      "id": "interview-preparation",
+      "language": "zh",
+      "question": "如何准备绿卡面试？",
+      "answer": "准备工作包括：1）复习所有申请材料，2）携带原始文件和复印件，3）练习面试问题，4）提前到达，5）着装得体，6）如需要携带翻译，7）诚实一致地回答，8）携带关系证明（如适用），以及9）准备讨论您的背景和意图。"
+    },
+    {
+      "id": "status-checking",
+      "language": "en",
+      "question": "How can I check my Green Card application status?",
+      "answer": "You can check your status through: 1) USCIS online case status tool, 2) USCIS Contact Center, 3) Case status app, 4) Your attorney (if using one), 5) Your sponsor (if applicable), and 6) The National Visa Center (for consular processing). Keep your receipt number safe for status checks."
+    },
+    {
+      "id": "status-checking",
+      "language": "zh",
+      "question": "如何查询绿卡申请状态？",
+      "answer": "您可以通过以下方式查询状态：1）USCIS在线案件状态工具，2）USCIS联系中心，3）案件状态应用程序，4）您的律师（如使用），5）您的担保人（如适用），以及6）国家签证中心（用于领事处理）。请妥善保管您的收据号码以便查询状态。"
+    },
+    {
+      "id": "conditional-residence",
+      "language": "en",
+      "question": "What is conditional permanent residence?",
+      "answer": "Conditional permanent residence is granted to certain immigrants, typically those who obtain Green Cards through marriage (if married less than 2 years) or investment. It's valid for 2 years, after which you must file to remove conditions to maintain permanent resident status."
+    },
+    {
+      "id": "conditional-residence",
+      "language": "zh",
+      "question": "什么是条件性永久居留权？",
+      "answer": "条件性永久居留权授予某些移民，通常是通过婚姻（如果结婚不到2年）或投资获得绿卡的人。有效期为2年，之后您必须申请解除条件以维持永久居民身份。"
+    },
+    {
+      "id": "removing-conditions",
+      "language": "en",
+      "question": "How do I remove conditions on permanent residence?",
+      "answer": "To remove conditions: 1) File Form I-751 (for marriage-based) or I-829 (for investment-based) within 90 days before your conditional Green Card expires, 2) Provide evidence of continued eligibility, 3) Pay required fees, 4) Attend biometrics appointment, and 5) Attend interview if required."
+    },
+    {
+      "id": "removing-conditions",
+      "language": "zh",
+      "question": "如何解除永久居留权的条件？",
+      "answer": "解除条件需要：1）在条件性绿卡到期前90天内提交I-751表格（基于婚姻）或I-829表格（基于投资），2）提供持续资格的证明，3）支付所需费用，4）参加生物识别预约，以及5）如需要参加面试。"
+    },
+    {
+      "id": "naturalization-eligibility",
+      "language": "en",
+      "question": "When am I eligible for naturalization?",
+      "answer": "You may be eligible for naturalization if you: 1) Have been a permanent resident for at least 5 years (or 3 years if married to a U.S. citizen), 2) Have continuous residence in the U.S., 3) Have physical presence in the U.S., 4) Have good moral character, 5) Can read, write, and speak English, 6) Have knowledge of U.S. history and government, and 7) Are willing to take the Oath of Allegiance."
+    },
+    {
+      "id": "naturalization-eligibility",
+      "language": "zh",
+      "question": "我什么时候有资格申请入籍？",
+      "answer": "如果您满足以下条件，可能有资格申请入籍：1）成为永久居民至少5年（如果与美国公民结婚则为3年），2）在美国连续居住，3）在美国实际居住，4）具有良好的道德品质，5）能够读、写和说英语，6）了解美国历史和政府，以及7）愿意宣誓效忠。"
+    },
+    {
+      "id": "maintaining-status",
+      "language": "en",
+      "question": "How do I maintain my permanent resident status?",
+      "answer": "To maintain status: 1) Don't leave the U.S. for extended periods, 2) File U.S. tax returns, 3) Register for Selective Service (if required), 4) Keep your address updated with USCIS, 5) Carry your Green Card at all times, 6) Don't commit crimes, 7) Don't abandon your U.S. residence, and 8) Apply for a re-entry permit if planning long trips."
+    },
+    {
+      "id": "maintaining-status",
+      "language": "zh",
+      "question": "如何维持永久居民身份？",
+      "answer": "维持身份需要：1）不要长期离开美国，2）提交美国纳税申报表，3）登记选择性服务（如需要），4）及时更新USCIS的地址，5）随时携带绿卡，6）不要犯罪，7）不要放弃美国居所，以及8）如果计划长期旅行，申请再入境许可。"
+    },
+    {
+      "id": "travel-restrictions",
+      "language": "en",
+      "question": "What are the travel restrictions for Green Card holders?",
+      "answer": "Green Card holders should: 1) Not stay outside the U.S. for more than 6 months without a re-entry permit, 2) Not stay outside for more than 1 year (even with a permit), 3) Maintain a U.S. residence, 4) File taxes in the U.S., 5) Keep their Green Card valid, and 6) Apply for a re-entry permit before long trips."
+    },
+    {
+      "id": "travel-restrictions",
+      "language": "zh",
+      "question": "绿卡持有者的旅行限制是什么？",
+      "answer": "绿卡持有者应该：1）没有再入境许可不要在美国境外停留超过6个月，2）即使有许可也不要停留超过1年，3）维持美国居所，4）在美国报税，5）保持绿卡有效，以及6）在长期旅行前申请再入境许可。"
+    },
+    {
+      "id": "renewal-process",
+      "language": "en",
+      "question": "How do I renew my Green Card?",
+      "answer": "To renew your Green Card: 1) File Form I-90 within 6 months before expiration, 2) Pay the filing fee, 3) Provide current photos, 4) Submit required documents, 5) Attend biometrics appointment, and 6) Wait for new card. You can file online or by mail. Keep your expired card until you receive the new one."
+    },
+    {
+      "id": "renewal-process",
+      "language": "zh",
+      "question": "如何更新绿卡？",
+      "answer": "更新绿卡需要：1）在到期前6个月内提交I-90表格，2）支付申请费，3）提供当前照片，4）提交所需文件，5）参加生物识别预约，以及6）等待新卡。您可以在线或通过邮件提交。在收到新卡之前保留过期的卡。"
+    },
+    {
+      "id": "replacement-process",
+      "language": "en",
+      "question": "What if I lose my Green Card?",
+      "answer": "If you lose your Green Card: 1) File Form I-90 immediately, 2) Report the loss to local police, 3) Get a police report, 4) Pay the replacement fee, 5) Provide evidence of your identity, 6) Submit new photos, and 7) Consider getting a temporary I-551 stamp in your passport if you need to travel."
+    },
+    {
+      "id": "replacement-process",
+      "language": "zh",
+      "question": "如果丢失绿卡怎么办？",
+      "answer": "如果丢失绿卡：1）立即提交I-90表格，2）向当地警察报告丢失，3）获取警察报告，4）支付补办费用，5）提供身份证明，6）提交新照片，以及7）如果需要旅行，考虑在护照上获取临时I-551印章。"
+    },
+    {
+      "id": "work-authorization",
+      "language": "en",
+      "question": "What are the work rights for Green Card holders?",
+      "answer": "Green Card holders can: 1) Work for any employer in the U.S., 2) Start their own business, 3) Work in any field, 4) Change jobs freely, 5) Work without needing a work permit, 6) Apply for government jobs, and 7) Work in jobs requiring security clearance (if eligible)."
+    },
+    {
+      "id": "work-authorization",
+      "language": "zh",
+      "question": "绿卡持有者的工作权利是什么？",
+      "answer": "绿卡持有者可以：1）为美国任何雇主工作，2）开办自己的企业，3）在任何领域工作，4）自由更换工作，5）无需工作许可即可工作，6）申请政府工作，以及7）从事需要安全许可的工作（如符合资格）。"
+    },
+    {
+      "id": "benefits",
+      "language": "en",
+      "question": "What benefits do Green Card holders receive?",
+      "answer": "Benefits include: 1) Live and work permanently in the U.S., 2) Apply for government benefits, 3) Sponsor family members, 4) Travel freely in and out of the U.S., 5) Apply for U.S. citizenship after meeting requirements, 6) Access to education and healthcare, 7) Protection under U.S. laws, and 8) Social Security benefits after working."
+    },
+    {
+      "id": "benefits",
+      "language": "zh",
+      "question": "绿卡持有者享有哪些福利？",
+      "answer": "福利包括：1）在美国永久居住和工作，2）申请政府福利，3）担保家庭成员，4）自由进出美国，5）满足要求后申请美国公民身份，6）获得教育和医疗保健，7）受美国法律保护，以及8）工作后获得社会保障福利。"
+    },
+    {
+      "id": "tax-obligations",
+      "language": "en",
+      "question": "What are the tax obligations for Green Card holders?",
+      "answer": "Green Card holders must: 1) File U.S. tax returns annually, 2) Report worldwide income, 3) Pay U.S. taxes on all income, 4) Report foreign bank accounts, 5) Comply with FATCA requirements, 6) Pay state and local taxes, and 7) Maintain tax records for at least 3 years."
+    },
+    {
+      "id": "tax-obligations",
+      "language": "zh",
+      "question": "绿卡持有者的纳税义务是什么？",
+      "answer": "绿卡持有者必须：1）每年提交美国纳税申报表，2）申报全球收入，3）为所有收入缴纳美国税款，4）申报外国银行账户，5）遵守FATCA要求，6）缴纳州和地方税，以及7）保存税务记录至少3年。"
+    },
+    {
+      "id": "military-service",
+      "language": "en",
+      "question": "Can Green Card holders join the U.S. military?",
+      "answer": "Yes, Green Card holders can join the U.S. military. Benefits include: 1) Fast-track to citizenship, 2) Educational benefits, 3) Healthcare coverage, 4) Housing allowances, 5) Retirement benefits, and 6) Job training. However, some positions requiring security clearance may have restrictions."
+    },
+    {
+      "id": "military-service",
+      "language": "zh",
+      "question": "绿卡持有者可以加入美国军队吗？",
+      "answer": "是的，绿卡持有者可以加入美国军队。福利包括：1）快速获得公民身份，2）教育福利，3）医疗保健，4）住房津贴，5）退休福利，以及6）职业培训。但是，一些需要安全许可的职位可能有限制。"
+    },
+    {
+      "id": "voting-rights",
+      "language": "en",
+      "question": "Can Green Card holders vote in U.S. elections?",
+      "answer": "No, Green Card holders cannot vote in U.S. elections. Only U.S. citizens can vote in federal, state, and local elections. Voting as a non-citizen is a serious violation that can result in deportation and permanent bar from citizenship."
+    },
+    {
+      "id": "voting-rights",
+      "language": "zh",
+      "question": "绿卡持有者可以在美国选举中投票吗？",
+      "answer": "不可以，绿卡持有者不能在美国选举中投票。只有美国公民才能在联邦、州和地方选举中投票。非公民投票是严重违规行为，可能导致驱逐出境和永久禁止获得公民身份。"
+    },
+    {
+      "id": "criminal-consequences",
+      "language": "en",
+      "question": "What happens if a Green Card holder commits a crime?",
+      "answer": "Criminal convictions can: 1) Lead to deportation, 2) Make you ineligible for citizenship, 3) Prevent Green Card renewal, 4) Result in permanent bars from re-entry, 5) Affect family members' applications, and 6) Lead to loss of benefits. Always consult an immigration attorney if facing criminal charges."
+    },
+    {
+      "id": "criminal-consequences",
+      "language": "zh",
+      "question": "如果绿卡持有者犯罪会发生什么？",
+      "answer": "刑事定罪可能：1）导致驱逐出境，2）使您没有资格获得公民身份，3）阻止绿卡更新，4）导致永久禁止再入境，5）影响家庭成员的申请，以及6）导致福利损失。如果面临刑事指控，请务必咨询移民律师。"
+    },
+    {
+      "id": "public-charge",
+      "language": "en",
+      "question": "What is the public charge rule?",
+      "answer": "The public charge rule considers whether an immigrant is likely to become dependent on government benefits. Factors include: 1) Age, 2) Health, 3) Family status, 4) Assets and resources, 5) Education and skills, 6) Financial status, and 7) Previous use of public benefits. This can affect Green Card applications and renewals."
+    },
+    {
+      "id": "public-charge",
+      "language": "zh",
+      "question": "什么是公共负担规则？",
+      "answer": "公共负担规则考虑移民是否可能依赖政府福利。因素包括：1）年龄，2）健康状况，3）家庭状况，4）资产和资源，5）教育和技能，6）财务状况，以及7）以前使用公共福利的情况。这可能影响绿卡申请和更新。"
+    },
+    {
+      "id": "healthcare-access",
+      "language": "en",
+      "question": "What healthcare options are available to Green Card holders?",
+      "answer": "Green Card holders can access: 1) Private health insurance, 2) Employer-sponsored insurance, 3) Marketplace insurance, 4) Medicare (if eligible), 5) Medicaid (if eligible), 6) Community health centers, and 7) Emergency medical care. Some benefits may have waiting periods."
+    },
+    {
+      "id": "healthcare-access",
+      "language": "zh",
+      "question": "绿卡持有者可以获得哪些医疗保健选择？",
+      "answer": "绿卡持有者可以获得：1）私人健康保险，2）雇主提供的保险，3）市场保险，4）医疗保险（如符合资格），5）医疗补助（如符合资格），6）社区医疗中心，以及7）紧急医疗护理。某些福利可能有等待期。"
+    },
+    {
+      "id": "education-rights",
+      "language": "en",
+      "question": "What are the education rights for Green Card holders?",
+      "answer": "Green Card holders can: 1) Attend public schools, 2) Apply for in-state tuition, 3) Apply for federal student aid, 4) Apply for scholarships, 5) Attend private schools, 6) Apply for student loans, and 7) Access educational programs and resources."
+    },
+    {
+      "id": "education-rights",
+      "language": "zh",
+      "question": "绿卡持有者的教育权利是什么？",
+      "answer": "绿卡持有者可以：1）就读公立学校，2）申请州内学费，3）申请联邦学生援助，4）申请奖学金，5）就读私立学校，6）申请学生贷款，以及7）获得教育项目和资源。"
+    },
+    {
+      "id": "social-security",
+      "language": "en",
+      "question": "How does Social Security work for Green Card holders?",
+      "answer": "Green Card holders: 1) Can work and earn Social Security credits, 2) Must have a valid SSN, 3) Can receive benefits after working 10 years, 4) Can receive disability benefits if eligible, 5) Can receive survivor benefits, 6) Must report work outside the U.S., and 7) May have benefits reduced if living abroad."
+    },
+    {
+      "id": "social-security",
+      "language": "zh",
+      "question": "绿卡持有者如何获得社会保障？",
+      "answer": "绿卡持有者：1）可以工作并赚取社会保障积分，2）必须拥有有效的社会安全号码，3）工作10年后可以获得福利，4）如符合资格可以获得残疾福利，5）可以获得遗属福利，6）必须报告在美国以外的工作，以及7）如果在国外生活，福利可能会减少。"
+    },
+    {
+      "id": "retirement-benefits",
+      "language": "en",
+      "question": "What retirement benefits are available to Green Card holders?",
+      "answer": "Available benefits include: 1) Social Security retirement benefits, 2) Employer-sponsored retirement plans, 3) Individual Retirement Accounts (IRAs), 4) 401(k) plans, 5) Pension plans, 6) Investment accounts, and 7) Medicare (if eligible). Benefits may vary based on work history and contributions."
+    },
+    {
+      "id": "retirement-benefits",
+      "language": "zh",
+      "question": "绿卡持有者可以获得哪些退休福利？",
+      "answer": "可获得的福利包括：1）社会保障退休福利，2）雇主提供的退休计划，3）个人退休账户（IRA），4）401(k)计划，5）养老金计划，6）投资账户，以及7）医疗保险（如符合资格）。福利可能因工作历史和缴款而异。"
+    },
+    {
+      "id": "estate-planning",
+      "language": "en",
+      "question": "How should Green Card holders plan their estate?",
+      "answer": "Estate planning should include: 1) Creating a will, 2) Setting up trusts, 3) Designating beneficiaries, 4) Planning for tax implications, 5) Considering international assets, 6) Creating power of attorney, 7) Making healthcare directives, and 8) Consulting with legal and tax professionals."
+    },
+    {
+      "id": "estate-planning",
+      "language": "zh",
+      "question": "绿卡持有者应该如何规划遗产？",
+      "answer": "遗产规划应包括：1）创建遗嘱，2）设立信托，3）指定受益人，4）规划税务影响，5）考虑国际资产，6）创建授权书，7）制定医疗保健指示，以及8）咨询法律和税务专业人士。"
+    },
+    {
+      "id": "international-travel",
+      "language": "en",
+      "question": "What should Green Card holders know about international travel?",
+      "answer": "Important considerations include: 1) Keep Green Card valid, 2) Get re-entry permit for long trips, 3) Maintain U.S. residence, 4) File taxes in the U.S., 5) Keep travel records, 6) Check visa requirements for destination countries, 7) Consider travel insurance, and 8) Keep emergency contacts handy."
+    },
+    {
+      "id": "international-travel",
+      "language": "zh",
+      "question": "绿卡持有者应该了解哪些关于国际旅行的信息？",
+      "answer": "重要考虑因素包括：1）保持绿卡有效，2）长期旅行获取再入境许可，3）维持美国居所，4）在美国报税，5）保存旅行记录，6）检查目的地国家的签证要求，7）考虑旅行保险，以及8）保持紧急联系人方便联系。"
+    },
+    {
+      "id": "dual-citizenship",
+      "language": "en",
+      "question": "Can Green Card holders have dual citizenship?",
+      "answer": "Yes, Green Card holders can have dual citizenship. However: 1) Check if your home country allows dual citizenship, 2) Understand tax obligations in both countries, 3) Be aware of military service requirements, 4) Consider inheritance laws, 5) Check voting rights, 6) Understand passport requirements, and 7) Consult with legal experts."
+    },
+    {
+      "id": "dual-citizenship",
+      "language": "zh",
+      "question": "绿卡持有者可以拥有双重国籍吗？",
+      "answer": "是的，绿卡持有者可以拥有双重国籍。但是：1）检查您的原籍国是否允许双重国籍，2）了解两个国家的纳税义务，3）注意兵役要求，4）考虑继承法，5）检查投票权，6）了解护照要求，以及7）咨询法律专家。"
+    },
+    {
+      "id": "sponsoring-family",
+      "language": "en",
+      "question": "How can Green Card holders sponsor family members?",
+      "answer": "Process includes: 1) File Form I-130, 2) Meet income requirements, 3) Provide financial support, 4) Wait for visa availability, 5) Complete medical examination, 6) Attend interview, and 7) Pay required fees. Different rules apply for immediate relatives vs. preference categories."
+    },
+    {
+      "id": "sponsoring-family",
+      "language": "zh",
+      "question": "绿卡持有者如何担保家庭成员？",
+      "answer": "流程包括：1）提交I-130表格，2）满足收入要求，3）提供经济支持，4）等待签证可用性，5）完成体检，6）参加面试，以及7）支付所需费用。直系亲属和优先类别适用不同规则。"
+    },
+    {
+      "id": "employment-changes",
+      "language": "en",
+      "question": "What should Green Card holders know about changing jobs?",
+      "answer": "Considerations include: 1) No work permit needed, 2) Update address with USCIS, 3) Maintain tax records, 4) Keep Green Card valid, 5) Report income changes, 6) Update employer information, 7) Consider impact on benefits, and 8) Maintain good standing for citizenship."
+    },
+    {
+      "id": "employment-changes",
+      "language": "zh",
+      "question": "绿卡持有者更换工作时应该了解什么？",
+      "answer": "考虑因素包括：1）不需要工作许可，2）更新USCIS的地址，3）保存税务记录，4）保持绿卡有效，5）报告收入变化，6）更新雇主信息，7）考虑对福利的影响，以及8）保持良好的公民身份资格。"
+    },
+    {
+      "id": "business-ownership",
+      "language": "en",
+      "question": "Can Green Card holders start businesses in the U.S.?",
+      "answer": "Yes, Green Card holders can: 1) Start any type of business, 2) Hire employees, 3) Apply for business licenses, 4) Get business loans, 5) Open business bank accounts, 6) Pay business taxes, 7) Sponsor employees, and 8) Participate in government contracts."
+    },
+    {
+      "id": "business-ownership",
+      "language": "zh",
+      "question": "绿卡持有者可以在美国创业吗？",
+      "answer": "是的，绿卡持有者可以：1）创办任何类型的企业，2）雇用员工，3）申请营业执照，4）获得商业贷款，5）开设企业银行账户，6）缴纳企业税，7）担保员工，以及8）参与政府合同。"
+    },
+    {
+      "id": "real-estate",
+      "language": "en",
+      "question": "Can Green Card holders buy property in the U.S.?",
+      "answer": "Yes, Green Card holders can: 1) Buy residential property, 2) Buy commercial property, 3) Get mortgages, 4) Rent properties, 5) Invest in real estate, 6) Pay property taxes, 7) Get property insurance, and 8) Sell property. No special restrictions apply."
+    },
+    {
+      "id": "real-estate",
+      "language": "zh",
+      "question": "绿卡持有者可以在美国购买房产吗？",
+      "answer": "是的，绿卡持有者可以：1）购买住宅房产，2）购买商业房产，3）获得抵押贷款，4）出租房产，5）投资房地产，6）缴纳房产税，7）获得房产保险，以及8）出售房产。没有特殊限制。"
+    },
+    {
+      "id": "banking-rights",
+      "language": "en",
+      "question": "What banking rights do Green Card holders have?",
+      "answer": "Green Card holders can: 1) Open bank accounts, 2) Get credit cards, 3) Apply for loans, 4) Invest in stocks, 5) Open retirement accounts, 6) Get insurance, 7) Use online banking, and 8) Access all banking services available to U.S. citizens."
+    },
+    {
+      "id": "banking-rights",
+      "language": "zh",
+      "question": "绿卡持有者有哪些银行权利？",
+      "answer": "绿卡持有者可以：1）开设银行账户，2）获得信用卡，3）申请贷款，4）投资股票，5）开设退休账户，6）获得保险，7）使用网上银行，以及8）获得美国公民可用的所有银行服务。"
+    },
+    {
+      "id": "investment-options",
+      "language": "en",
+      "question": "What investment options are available to Green Card holders?",
+      "answer": "Available options include: 1) Stock market investments, 2) Mutual funds, 3) Real estate, 4) Retirement accounts, 5) Bonds, 6) Cryptocurrency, 7) Business investments, and 8) International investments. Consider tax implications and consult financial advisors."
+    },
+    {
+      "id": "investment-options",
+      "language": "zh",
+      "question": "绿卡持有者有哪些投资选择？",
+      "answer": "可用选择包括：1）股票市场投资，2）共同基金，3）房地产，4）退休账户，5）债券，6）加密货币，7）商业投资，以及8）国际投资。考虑税务影响并咨询财务顾问。"
+    },
+    {
+      "id": "insurance-options",
+      "language": "en",
+      "question": "What insurance options are available to Green Card holders?",
+      "answer": "Available options include: 1) Health insurance, 2) Life insurance, 3) Auto insurance, 4) Home insurance, 5) Disability insurance, 6) Long-term care insurance, 7) Business insurance, and 8) Travel insurance. Compare policies and consider your needs."
+    },
+    {
+      "id": "insurance-options",
+      "language": "zh",
+      "question": "绿卡持有者有哪些保险选择？",
+      "answer": "可用选择包括：1）健康保险，2）人寿保险，3）汽车保险，4）房屋保险，5）残疾保险，6）长期护理保险，7）商业保险，以及8）旅行保险。比较保单并考虑您的需求。"
+    },
+    {
+      "id": "legal-rights",
+      "language": "en",
+      "question": "What legal rights do Green Card holders have?",
+      "answer": "Rights include: 1) Equal protection under laws, 2) Right to work, 3) Right to own property, 4) Right to education, 5) Right to healthcare, 6) Right to legal representation, 7) Right to due process, and 8) Protection from discrimination."
+    },
+    {
+      "id": "legal-rights",
+      "language": "zh",
+      "question": "绿卡持有者有哪些法律权利？",
+      "answer": "权利包括：1）法律下的平等保护，2）工作权，3）财产所有权，4）教育权，5）医疗保健权，6）法律代表权，7）正当程序权，以及8）免受歧视的保护。"
+    },
+    {
+      "id": "legal-obligations",
+      "language": "en",
+      "question": "What are the legal obligations of Green Card holders?",
+      "answer": "Obligations include: 1) Obey all laws, 2) Pay taxes, 3) Register for Selective Service (if required), 4) Maintain valid Green Card, 5) Report address changes, 6) File tax returns, 7) Not commit crimes, and 8) Maintain permanent residence."
+    },
+    {
+      "id": "legal-obligations",
+      "language": "zh",
+      "question": "绿卡持有者的法律义务是什么？",
+      "answer": "义务包括：1）遵守所有法律，2）纳税，3）登记选择性服务（如需要），4）保持绿卡有效，5）报告地址变更，6）提交纳税申报表，7）不犯罪，以及8）维持永久居留权。"
+    },
+    {
+      "id": "immigration-court",
+      "language": "en",
+      "question": "What happens in immigration court?",
+      "answer": "Process includes: 1) Initial hearing, 2) Bond hearing (if applicable), 3) Individual hearing, 4) Evidence presentation, 5) Witness testimony, 6) Legal arguments, 7) Judge's decision, and 8) Appeal options. Always have legal representation."
+    },
+    {
+      "id": "immigration-court",
+      "language": "zh",
+      "question": "移民法庭会发生什么？",
+      "answer": "流程包括：1）初步听证会，2）保释听证会（如适用），3）个人听证会，4）证据呈递，5）证人证词，6）法律论据，7）法官判决，以及8）上诉选择。始终要有法律代表。"
+    },
+    {
+      "id": "deportation-defense",
+      "language": "en",
+      "question": "What are the defenses against deportation?",
+      "answer": "Defenses include: 1) Cancellation of removal, 2) Asylum, 3) Withholding of removal, 4) Convention Against Torture, 5) Adjustment of status, 6) Waivers, 7) U.S. citizen children, and 8) Other forms of relief. Consult an immigration attorney."
+    },
+    {
+      "id": "deportation-defense",
+      "language": "zh",
+      "question": "有哪些针对驱逐出境的辩护？",
+      "answer": "辩护包括：1）取消驱逐，2）庇护，3）暂缓驱逐，4）禁止酷刑公约，5）身份调整，6）豁免，7）美国公民子女，以及8）其他形式的救济。咨询移民律师。"
+    },
+    {
+      "id": "immigration-reform",
+      "language": "en",
+      "question": "How do immigration law changes affect Green Card holders?",
+      "answer": "Changes can affect: 1) Application processes, 2) Eligibility requirements, 3) Processing times, 4) Fees, 5) Benefits, 6) Travel rights, 7) Family sponsorship, and 8) Path to citizenship. Stay informed about updates."
+    },
+    {
+      "id": "immigration-reform",
+      "language": "zh",
+      "question": "移民法变更如何影响绿卡持有者？",
+      "answer": "变更可能影响：1）申请流程，2）资格要求，3）处理时间，4）费用，5）福利，6）旅行权利，7）家庭担保，以及8）获得公民身份的途径。及时了解更新。"
+    },
+    {
+      "id": "future-changes",
+      "language": "en",
+      "question": "How can Green Card holders prepare for future changes?",
+      "answer": "Preparation includes: 1) Stay informed about policy changes, 2) Maintain good standing, 3) Keep documents current, 4) Save for potential fee increases, 5) Build strong ties to the U.S., 6) Consider citizenship, 7) Keep records organized, and 8) Have a plan B."
+    },
+    {
+      "id": "future-changes",
+      "language": "zh",
+      "question": "绿卡持有者如何为未来的变化做准备？",
+      "answer": "准备工作包括：1）及时了解政策变化，2）保持良好的状态，3）保持文件最新，4）为可能的费用增加存钱，5）建立与美国的紧密联系，6）考虑入籍，7）保持记录有序，以及8）制定备选计划。"
+    }
+  ],
+  "embedding_dimensions": 768
+}
