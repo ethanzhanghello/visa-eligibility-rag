@@ -30,12 +30,12 @@ def populate_vector_db():
         vector_db_manager = VectorDBManager()
         
         # Load FAQs
-        faq_path = Path(project_root) / "data" / "knowledge-base" / "faqs.json"
+        faq_path = Path(project_root) / "src" / "data" / "knowledge-base" / "faqs.json"
         if not faq_path.exists():
             raise FileNotFoundError(f"FAQ file not found at {faq_path}")
             
         with open(faq_path, 'r', encoding='utf-8') as f:
-            faqs = json.load(f)
+            faqs = json.load(f)["faqs"]
         
         # Generate embeddings and add to vector DB
         for faq in faqs:

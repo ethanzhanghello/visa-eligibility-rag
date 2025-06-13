@@ -5,6 +5,8 @@ import chromadb
 import numpy as np
 import logging
 from typing import List, Dict, Any, Optional
+from chromadb.config import Settings
+import os
 
 # Configure logging
 logging.basicConfig(
@@ -24,9 +26,11 @@ class VectorDBManager:
         """
         self.collection_name = collection_name
         try:
-            # Initialize ChromaDB client
-            self.client = chromadb.Client()
-            logger.info(f"Initializing VectorDBManager with collection: {collection_name}")
+            # Set persistent directory for ChromaDB
+            project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) )
+            persist_dir = os.path.join(project_root, "chroma_db")
+            self.client = chromadb.Client(Settings(persist_directory=persist_dir))
+            logger.info(f"Initializing VectorDBManager with collection: {collection_name} (persistent at {persist_dir})")
             
             # Get or create collection
             self.collection = self._get_or_create_collection()
@@ -82,9 +86,11 @@ class VectorDBManager:
             # Generate IDs if not provided in metadata
             if metadatas is None:
                 metadatas = [{"id": str(i)} for i in range(len(documents))]
+            ids = [meta["id"] for meta in metadatas]
             
             # Add documents to collection
             self.collection.add(
+                ids=ids,
                 documents=documents,
                 embeddings=embeddings_list,
                 metadatas=metadatas
