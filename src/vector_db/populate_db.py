@@ -1,14 +1,19 @@
+"""
+Script to populate the vector database with FAQ embeddings.
+"""
 import sys
 from pathlib import Path
 import logging
 import numpy as np
+import json
 
-# Add the src directory to the Python path
-sys.path.append(str(Path(__file__).parent.parent))
+# Add the project root to the Python path
+project_root = str(Path(__file__).parent.parent.parent)
+if project_root not in sys.path:
+    sys.path.append(project_root)
 
-from vector_db.vector_db_manager import VectorDBManager
-from embeddings.embedding_utils import EmbeddingManager
-from utils.validation import load_and_validate_knowledge_base
+from src.embeddings.embedding_utils import EmbeddingManager
+from src.vector_db.vector_db_manager import VectorDBManager
 
 # Configure logging
 logging.basicConfig(
@@ -21,38 +26,40 @@ def populate_vector_db():
     """Populate the vector database with FAQ embeddings."""
     try:
         # Initialize managers
-        logger.info("Initializing managers...")
         embedding_manager = EmbeddingManager()
         vector_db_manager = VectorDBManager()
-
-        # Load and validate FAQs
-        logger.info("Loading FAQs...")
-        faq_path = Path(__file__).parent.parent / 'data' / 'knowledge-base' / 'faqs.json'
-        faqs = load_and_validate_knowledge_base(str(faq_path))
-
-        # Generate embeddings for each FAQ
-        logger.info("Generating embeddings...")
-        embeddings = []
+        
+        # Load FAQs
+        faq_path = Path(project_root) / "data" / "knowledge-base" / "faqs.json"
+        if not faq_path.exists():
+            raise FileNotFoundError(f"FAQ file not found at {faq_path}")
+            
+        with open(faq_path, 'r', encoding='utf-8') as f:
+            faqs = json.load(f)
+        
+        # Generate embeddings and add to vector DB
         for faq in faqs:
             # Combine question and answer for better context
             text = f"{faq['question']} {faq['answer']}"
             embedding = embedding_manager.get_embedding(text)
-            embeddings.append(embedding)
-
-        # Add documents to vector database
-        logger.info("Adding documents to vector database...")
-        vector_db_manager.add_documents(faqs, embeddings)
-
-        logger.info("Successfully populated vector database")
-        return True
-
+            
+            # Add to vector DB
+            vector_db_manager.add_documents(
+                documents=[text],
+                embeddings=[embedding],
+                metadatas=[{
+                    'id': faq['id'],
+                    'question': faq['question'],
+                    'answer': faq['answer'],
+                    'language': faq['language']
+                }]
+            )
+            
+        logger.info("Successfully populated vector database with FAQ embeddings")
+        
     except Exception as e:
-        logger.error(f"Failed to populate vector database: {str(e)}")
+        logger.error(f"Error populating vector database: {str(e)}")
         raise
 
 if __name__ == "__main__":
-    try:
-        populate_vector_db()
-    except Exception as e:
-        logger.error(f"Failed to populate vector database: {str(e)}")
-        sys.exit(1) 
+    populate_vector_db() 

@@ -1,10 +1,14 @@
+"""
+Utility functions for working with embeddings.
+"""
+import os
 import json
 import numpy as np
 from pathlib import Path
 from typing import List, Dict, Tuple, Any, Optional
 from sentence_transformers import SentenceTransformer
 import logging
-from ..utils.validation import ValidationError
+from src.utils.validation import ValidationError
 
 # Configure logging
 logging.basicConfig(
