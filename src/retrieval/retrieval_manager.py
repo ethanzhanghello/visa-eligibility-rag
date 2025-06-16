@@ -29,6 +29,16 @@ class RetrievalManager:
             logger.error(f"Failed to initialize RetrievalManager: {str(e)}")
             raise
     
+    def normalize_language(self, lang: str) -> str:
+        """Normalize language codes to match those in the database ('en', 'zh')."""
+        lang = lang.lower()
+        if lang.startswith('zh'):
+            return 'zh'
+        if lang.startswith('en'):
+            return 'en'
+        # Default to English if not recognized
+        return 'en'
+
     def detect_language(self, text: str) -> str:
         """Detect the language of the input text.
         
@@ -43,8 +53,9 @@ class RetrievalManager:
                 raise ValueError("Input text cannot be empty")
             
             lang = detect(text)
-            logger.info(f"Detected language: {lang}")
-            return lang
+            norm_lang = self.normalize_language(lang)
+            logger.info(f"Detected language: {lang} (normalized: {norm_lang})")
+            return norm_lang
             
         except Exception as e:
             logger.error(f"Failed to detect language: {str(e)}")
@@ -73,11 +84,14 @@ class RetrievalManager:
             # Detect language if not provided
             if language is None:
                 language = self.detect_language(query)
+            else:
+                language = self.normalize_language(language)
             
             logger.info(f"Processing query in {language}: {query}")
             
-            # Generate embedding for the query
-            query_embedding = self.embedding_manager.get_embedding(query)
+            # Generate embedding for the query in the same format as stored documents
+            formatted_query = f"Q: {query}\nA:"
+            query_embedding = self.embedding_manager.get_embedding(formatted_query)
             
             # Search vector database
             results = self.vector_db_manager.search_similar(
@@ -94,27 +108,18 @@ class RetrievalManager:
             raise
     
     def get_context(self, results: List[Dict[str, Any]]) -> str:
-        """Combine search results into a context string.
+        """Generate a context string from retrieved results.
         
         Args:
-            results (List[Dict[str, Any]]): List of search results.
+            results (List[Dict[str, Any]]): List of relevant documents with metadata.
             
         Returns:
-            str: Combined context string.
+            str: Concatenated context string.
         """
-        try:
-            if not results:
-                return ""
-            
-            # Combine answers with their questions for better context
-            context_parts = []
-            for result in results:
-                context_parts.append(f"Q: {result['question']}\nA: {result['answer']}")
-            
-            context = "\n\n".join(context_parts)
-            logger.info(f"Generated context with {len(context_parts)} parts")
-            return context
-            
-        except Exception as e:
-            logger.error(f"Failed to generate context: {str(e)}")
-            raise 
+        context_parts = []
+        for result in results:
+            # Use metadata fields for question and answer
+            question = result['metadata'].get('question', '')
+            answer = result['metadata'].get('answer', '')
+            context_parts.append(f"Q: {question}\nA: {answer}")
+        return "\n\n".join(context_parts) 
