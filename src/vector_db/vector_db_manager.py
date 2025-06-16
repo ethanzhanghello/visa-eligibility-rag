@@ -18,22 +18,42 @@ logger = logging.getLogger(__name__)
 class VectorDBManager:
     """Manager class for handling ChromaDB operations."""
     
+    _instance = None
+    _client = None
+    
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(VectorDBManager, cls).__new__(cls)
+        return cls._instance
+    
     def __init__(self, collection_name: str = "green-card-faq"):
         """Initialize the vector database manager.
         
         Args:
             collection_name (str): Name of the collection to use.
         """
+        if hasattr(self, 'initialized'):
+            return
+            
         self.collection_name = collection_name
         try:
             # Set persistent directory for ChromaDB
-            project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))) )
+            project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
             persist_dir = os.path.join(project_root, "chroma_db")
-            self.client = chromadb.Client(Settings(persist_directory=persist_dir))
+            
+            # Create persistent directory if it doesn't exist
+            os.makedirs(persist_dir, exist_ok=True)
+            
+            # Initialize persistent client if not already initialized
+            if VectorDBManager._client is None:
+                VectorDBManager._client = chromadb.PersistentClient(path=persist_dir)
+            
+            self.client = VectorDBManager._client
             logger.info(f"Initializing VectorDBManager with collection: {collection_name} (persistent at {persist_dir})")
             
             # Get or create collection
             self.collection = self._get_or_create_collection()
+            self.initialized = True
             
         except Exception as e:
             logger.error(f"Failed to initialize VectorDBManager: {str(e)}")
@@ -106,45 +126,78 @@ class VectorDBManager:
     def search_similar(
         self,
         query_embedding: np.ndarray,
-        n_results: int = 5,
-        where: Optional[Dict[str, Any]] = None
+        n_results: int = 3,
+        where: Optional[Dict] = None,
+        similarity_threshold: float = 0.5  # Lowered from default
     ) -> List[Dict[str, Any]]:
-        """Search for similar documents.
+        """Search for similar documents in the collection.
         
         Args:
-            query_embedding (np.ndarray): Query embedding.
+            query_embedding (np.ndarray): Query embedding vector.
             n_results (int): Number of results to return.
-            where (Optional[Dict[str, Any]]): Filter conditions.
+            where (Optional[Dict]): Filter conditions.
+            similarity_threshold (float): Minimum similarity score to include a result.
             
         Returns:
             List[Dict[str, Any]]: List of similar documents with metadata.
         """
         try:
-            # Convert numpy array to list for ChromaDB
+            # Log collection state
+            doc_count = self.collection.count()
+            logger.info(f"Collection state: {doc_count} documents")
+            
+            if doc_count == 0:
+                logger.warning("Collection is empty. No documents to search.")
+                return []
+            
+            # Convert query embedding to list format
             query_embedding_list = query_embedding.tolist()
             
-            # Search for similar documents
+            # Perform the search
             results = self.collection.query(
                 query_embeddings=[query_embedding_list],
                 n_results=n_results,
                 where=where
             )
             
-            # Format results
-            formatted_results = []
-            for i in range(len(results['ids'][0])):
-                formatted_results.append({
-                    'id': results['ids'][0][i],
-                    'question': results['metadatas'][0][i].get('question', ''),
-                    'answer': results['metadatas'][0][i].get('answer', ''),
-                    'distance': results['distances'][0][i] if 'distances' in results else 0.0
-                })
+            # Log raw results for debugging
+            logger.debug(f"Raw query results: {results}")
             
-            logger.info(f"Found {len(formatted_results)} similar documents")
-            return formatted_results
+            if not results or not results.get('documents') or not results['documents'][0]:
+                logger.warning("No results found in query response")
+                return []
+            
+            # Debug: Print a few examples of stored documents and their embeddings
+            logger.info("Example stored documents and their embeddings:")
+            if 'embeddings' in results and results['embeddings'] and results['embeddings'][0]:
+                for i, (doc, emb) in enumerate(zip(results['documents'][0][:2], results['embeddings'][0][:2])):
+                    logger.info(f"Document {i}: {doc}")
+                    logger.info(f"Embedding {i}: {emb[:5]}...")  # Print first 5 elements
+            else:
+                for i, doc in enumerate(results['documents'][0][:2]):
+                    logger.info(f"Document {i}: {doc}")
+            
+            # Filter results by similarity threshold
+            filtered_results = []
+            for i, (doc, metadata, distance) in enumerate(zip(
+                results['documents'][0],
+                results['metadatas'][0],
+                results['distances'][0]
+            )):
+                similarity = 1 - distance  # Convert distance to similarity
+                if similarity >= similarity_threshold:
+                    filtered_results.append({
+                        'document': doc,
+                        'metadata': metadata,
+                        'similarity': similarity
+                    })
+            
+            logger.info(f"Found {len(filtered_results)} similar documents")
+            return filtered_results
             
         except Exception as e:
             logger.error(f"Failed to search similar documents: {str(e)}")
+            logger.exception("Detailed error trace:")
             return []
     
     def get_document(self, doc_id: str) -> Optional[Dict[str, Any]]:
