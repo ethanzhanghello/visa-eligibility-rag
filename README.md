@@ -14,7 +14,6 @@ A bilingual (English/Chinese) RAG-based assistant for answering immigration-rela
 - [Roadmap](#roadmap)
 - [Project Status](#project-status)
 - [Contributing](#contributing)
-- [Acknowledgments](#acknowledgments)
 - [License](#license)
 
 ## 🎯 Overview
@@ -97,7 +96,7 @@ User Query (EN/CN) → Vector Search → Context Retrieval → LLM Response
 ## 🆘 Support
 For support and questions:
 - Open an issue on GitHub
-- Email: support@example.com
+- Email: ezhang0606@gmail.com
 - Documentation: [Wiki](https://github.com/yourusername/green-card-rag-helper/wiki)
 
 ## 🗺️ Roadmap
@@ -127,12 +126,6 @@ We welcome contributions! Please follow these steps:
 5. Open a Pull Request
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
-
-## 👏 Acknowledgments
-- OpenAI for GPT-3.5-turbo
-- ChromaDB team for the vector database
-- E5 team for multilingual embeddings
-- All contributors and testers
 
 ## ⚖️ License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
