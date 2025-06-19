@@ -94,10 +94,10 @@ def test_vector_db():
             results = vector_db_manager.search_similar(embedding, n_results=2)
             
             for result in results:
-                logger.info(f"Document ID: {result['id']}")
-                logger.info(f"Question: {result['question']}")
-                logger.info(f"Answer: {result['answer']}")
-                logger.info(f"Distance: {result['distance']:.4f}")
+                logger.info(f"Document ID: {result['metadata']['id']}")
+                logger.info(f"Question: {result['metadata']['question']}")
+                logger.info(f"Answer: {result['metadata']['answer']}")
+                logger.info(f"Similarity: {result['similarity']:.4f}")
                 logger.info("---")
         
         # Test Mandarin queries
@@ -108,14 +108,14 @@ def test_vector_db():
             results = vector_db_manager.search_similar(
                 embedding,
                 n_results=2,
-                where={"language": "mandarin"}
+                where={"language": "zh"}
             )
             
             for result in results:
-                logger.info(f"Document ID: {result['id']}")
-                logger.info(f"Question: {result['question']}")
-                logger.info(f"Answer: {result['answer']}")
-                logger.info(f"Distance: {result['distance']:.4f}")
+                logger.info(f"Document ID: {result['metadata']['id']}")
+                logger.info(f"Question: {result['metadata']['question']}")
+                logger.info(f"Answer: {result['metadata']['answer']}")
+                logger.info(f"Similarity: {result['similarity']:.4f}")
                 logger.info("---")
         
         logger.info("\nVector database testing completed successfully")
