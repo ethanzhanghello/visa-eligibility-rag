@@ -61,9 +61,9 @@ def test_search_similar_empty_collection():
     assert results == []
 
 def test_search_similar_invalid_embedding(vector_db_manager):
-    # Should handle invalid embedding shape gracefully
-    with pytest.raises(Exception):
-        vector_db_manager.search_similar(np.array([1, 2, 3]), n_results=1)
+    # Should return an empty list if embedding shape is invalid
+    results = vector_db_manager.search_similar(np.array([1, 2, 3]), n_results=1)
+    assert results == []
 
 def test_vector_db():
     """Test vector database functionality with sample queries."""
