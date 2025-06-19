@@ -56,7 +56,7 @@ class VectorDBManager:
             self.initialized = True
             
         except Exception as e:
-            logger.error(f"Failed to initialize VectorDBManager: {str(e)}")
+            logger.exception(f"Failed to initialize VectorDBManager: {str(e)}")
             raise
     
     def _get_or_create_collection(self):
@@ -120,7 +120,7 @@ class VectorDBManager:
             return True
             
         except Exception as e:
-            logger.error(f"Failed to add documents: {str(e)}")
+            logger.exception(f"Failed to add documents: {str(e)}")
             return False
     
     def search_similar(
@@ -196,8 +196,7 @@ class VectorDBManager:
             return filtered_results
             
         except Exception as e:
-            logger.error(f"Failed to search similar documents: {str(e)}")
-            logger.exception("Detailed error trace:")
+            logger.exception(f"Failed to search similar documents: {str(e)}")
             return []
     
     def get_document(self, doc_id: str) -> Optional[Dict[str, Any]]:
@@ -221,7 +220,7 @@ class VectorDBManager:
             }
             
         except Exception as e:
-            logger.error(f"Failed to get document: {str(e)}")
+            logger.exception(f"Failed to get document: {str(e)}")
             return None
     
     def delete_document(self, doc_id: str) -> bool:
@@ -239,7 +238,7 @@ class VectorDBManager:
             return True
             
         except Exception as e:
-            logger.error(f"Failed to delete document: {str(e)}")
+            logger.exception(f"Failed to delete document: {str(e)}")
             return False
     
     def clear_collection(self) -> bool:
@@ -254,5 +253,5 @@ class VectorDBManager:
             return True
             
         except Exception as e:
-            logger.error(f"Failed to clear collection: {str(e)}")
+            logger.exception(f"Failed to clear collection: {str(e)}")
             return False 

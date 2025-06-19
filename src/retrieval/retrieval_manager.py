@@ -26,7 +26,7 @@ class RetrievalManager:
             self.embedding_manager = EmbeddingManager()
             self.vector_db_manager = VectorDBManager()
         except Exception as e:
-            logger.error(f"Failed to initialize RetrievalManager: {str(e)}")
+            logger.exception(f"Failed to initialize RetrievalManager: {str(e)}")
             raise
     
     def normalize_language(self, lang: str) -> str:
@@ -58,7 +58,7 @@ class RetrievalManager:
             return norm_lang
             
         except Exception as e:
-            logger.error(f"Failed to detect language: {str(e)}")
+            logger.exception(f"Failed to detect language: {str(e)}")
             raise
     
     def process_query(
@@ -104,7 +104,7 @@ class RetrievalManager:
             return results
             
         except Exception as e:
-            logger.error(f"Failed to process query: {str(e)}")
+            logger.exception(f"Failed to process query: {str(e)}")
             raise
     
     def get_context(self, results: List[Dict[str, Any]]) -> str:

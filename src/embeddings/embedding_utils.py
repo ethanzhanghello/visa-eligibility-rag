@@ -27,7 +27,7 @@ class EmbeddingManager:
             self.metadata = None
             self.load_embeddings()
         except Exception as e:
-            logger.error(f"Failed to initialize EmbeddingManager: {str(e)}")
+            logger.exception(f"Failed to initialize EmbeddingManager: {str(e)}")
             raise
     
     def load_embeddings(self) -> None:
@@ -59,7 +59,7 @@ class EmbeddingManager:
             logger.info(f"Successfully loaded {len(self.metadata['faqs'])} FAQs and their embeddings")
             
         except Exception as e:
-            logger.error(f"Failed to load embeddings: {str(e)}")
+            logger.exception(f"Failed to load embeddings: {str(e)}")
             raise
     
     def get_embedding(self, text: str) -> np.ndarray:
@@ -73,7 +73,7 @@ class EmbeddingManager:
             return embedding
             
         except Exception as e:
-            logger.error(f"Failed to generate embedding: {str(e)}")
+            logger.exception(f"Failed to generate embedding: {str(e)}")
             raise
     
     def find_similar_faqs(self, query: str, top_k: int = 5) -> List[Dict]:
@@ -107,7 +107,7 @@ class EmbeddingManager:
             return results
             
         except Exception as e:
-            logger.error(f"Failed to find similar FAQs: {str(e)}")
+            logger.exception(f"Failed to find similar FAQs: {str(e)}")
             raise
     
     def find_similar_faqs_by_language(self, query: str, language: str, top_k: int = 5) -> List[Dict]:
@@ -156,5 +156,5 @@ class EmbeddingManager:
             return results
             
         except Exception as e:
-            logger.error(f"Failed to find similar FAQs by language: {str(e)}")
+            logger.exception(f"Failed to find similar FAQs by language: {str(e)}")
             raise 
