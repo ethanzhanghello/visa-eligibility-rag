@@ -2,7 +2,7 @@
 Test the retrieval pipeline functionality.
 """
 import pytest
-from retrieval_manager import RetrievalManager
+from src.retrieval.retrieval_manager import RetrievalManager
 
 @pytest.fixture(scope="module")
 def retrieval_manager():

@@ -1,5 +1,5 @@
+from src.embeddings.embedding_utils import EmbeddingManager
 import pytest
-from embedding_utils import EmbeddingManager
 import numpy as np
 
 @pytest.fixture(scope="module")

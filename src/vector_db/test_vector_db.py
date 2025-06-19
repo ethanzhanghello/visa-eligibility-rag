@@ -6,14 +6,13 @@ from pathlib import Path
 import logging
 import pytest
 import numpy as np
+from src.embeddings.embedding_utils import EmbeddingManager
+from src.vector_db.vector_db_manager import VectorDBManager
 
 # Add the project root to the Python path
 project_root = str(Path(__file__).parent.parent.parent)
 if project_root not in sys.path:
     sys.path.append(project_root)
-
-from src.embeddings.embedding_utils import EmbeddingManager
-from src.vector_db.vector_db_manager import VectorDBManager
 
 # Configure logging
 logging.basicConfig(
