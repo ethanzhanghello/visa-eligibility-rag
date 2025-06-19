@@ -1,5 +1,49 @@
+import pytest
 from embedding_utils import EmbeddingManager
-import json
+import numpy as np
+
+@pytest.fixture(scope="module")
+def embedding_manager():
+    return EmbeddingManager()
+
+def test_get_embedding_valid(embedding_manager):
+    text = "What is a Green Card?"
+    embedding = embedding_manager.get_embedding(text)
+    assert isinstance(embedding, np.ndarray)
+    assert embedding.shape[0] > 0
+
+def test_get_embedding_empty(embedding_manager):
+    with pytest.raises(ValueError):
+        embedding_manager.get_embedding("")
+
+def test_find_similar_faqs_valid(embedding_manager):
+    query = "What is a Green Card?"
+    results = embedding_manager.find_similar_faqs(query, top_k=2)
+    assert isinstance(results, list)
+    assert len(results) == 2
+    for result in results:
+        assert 'faq' in result and 'similarity_score' in result
+
+def test_find_similar_faqs_empty_query(embedding_manager):
+    with pytest.raises(ValueError):
+        embedding_manager.find_similar_faqs("", top_k=2)
+
+def test_find_similar_faqs_by_language_valid(embedding_manager):
+    query = "什么是绿卡？"
+    results = embedding_manager.find_similar_faqs_by_language(query, 'zh', top_k=2)
+    assert isinstance(results, list)
+    assert len(results) <= 2
+    for result in results:
+        assert 'faq' in result and 'similarity_score' in result
+
+def test_find_similar_faqs_by_language_invalid_lang(embedding_manager):
+    query = "What is a Green Card?"
+    results = embedding_manager.find_similar_faqs_by_language(query, 'xx', top_k=2)
+    assert results == []
+
+def test_find_similar_faqs_by_language_empty_query(embedding_manager):
+    with pytest.raises(ValueError):
+        embedding_manager.find_similar_faqs_by_language("", 'en', top_k=2)
 
 def test_embedding_system():
     """Test the embedding system with sample queries."""
