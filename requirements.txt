@@ -1,4 +1,5 @@
 numpy>=1.24.0
-sentence-transformers>=2.2.2
-chromadb>=0.4.0
-langdetect>=1.0.9 
+sentence-transformers==2.5.1
+chromadb==0.4.24
+langdetect==1.0.9
+openai==1.14.0 

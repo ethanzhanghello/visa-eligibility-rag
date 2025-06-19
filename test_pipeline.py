@@ -10,6 +10,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from src.embeddings.embedding_utils import EmbeddingManager
 from src.vector_db.vector_db_manager import VectorDBManager
 from src.retrieval.retrieval_manager import RetrievalManager
+from src.llm.llm_manager import LLMManager
 
 def test_pipeline():
     """Test the entire RAG pipeline."""
@@ -20,6 +21,7 @@ def test_pipeline():
     embedding_manager = EmbeddingManager()
     vector_db_manager = VectorDBManager()
     retrieval_manager = RetrievalManager()
+    llm_manager = LLMManager()
     
     # Test queries
     test_queries = [
@@ -45,6 +47,17 @@ def test_pipeline():
         context = retrieval_manager.get_context(results)
         print("\nContext:")
         print(context)
+        
+        # Generate LLM response
+        print("\nGenerating response...")
+        try:
+            response = llm_manager.generate_response(context, query)
+            print("\nResponse:")
+            print(response["content"])
+            print(f"\nTokens used: {response['usage']['total_tokens']}")
+        except Exception as e:
+            print(f"Failed to generate response: {str(e)}")
+        
         print("-" * 80)
 
 if __name__ == "__main__":
