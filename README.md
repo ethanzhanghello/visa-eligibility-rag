@@ -24,6 +24,7 @@ Green Card RAG Helper is an intelligent assistant designed to provide accurate, 
 - **Vector Database**: ChromaDB
 - **Embeddings**: Multilingual E5 Base Model
 - **Backend**: Python 3.9+
+- **API**: FastAPI
 - **Testing**: pytest
 - **Dependencies Management**: pip
 
@@ -33,6 +34,7 @@ Green Card RAG Helper is an intelligent assistant designed to provide accurate, 
 - 2GB+ free disk space for vector database
 - RAM: 4GB minimum, 8GB recommended
 - Internet connection for API calls
+- FastAPI and Uvicorn
 
 ## 💻 Installation
 1. Clone the repository:
@@ -57,9 +59,9 @@ export OPENAI_API_KEY="your-api-key-here"
 python populate_db.py
 ```
 
-2. Run the test pipeline:
+2. Run the API server:
 ```bash
-python test_pipeline.py
+uvicorn src.api.main:app --reload
 ```
 
 3. Example queries:
