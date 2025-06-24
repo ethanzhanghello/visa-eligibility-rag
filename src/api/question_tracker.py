@@ -48,10 +48,10 @@ class QuestionTracker:
         try:
             data = {
                 'questions': {
-                    qid: q.dict() for qid, q in self.questions.items()
+                    qid: q.model_dump() for qid, q in self.questions.items()
                 },
                 'frequency': {
-                    qhash: f.dict() for qhash, f in self.frequency_tracker.items()
+                    qhash: f.model_dump() for qhash, f in self.frequency_tracker.items()
                 }
             }
             with open(self.storage_file, 'w', encoding='utf-8') as f:
@@ -98,8 +98,29 @@ class QuestionTracker:
                 average_confidence=confidence_score
             )
         
-        # Check if we should create a new low-confidence question entry
-        if question_hash not in self.questions:
+        # Check if we already have this question in our tracking
+        existing_question_id = None
+        for qid, q in self.questions.items():
+            if q.question == question and q.language == language:
+                existing_question_id = qid
+                break
+        
+        if existing_question_id:
+            # Update existing question
+            existing = self.questions[existing_question_id]
+            existing.frequency_count += 1
+            existing.last_asked = now
+            existing.audit_trail.append({
+                "action": "repeated_question",
+                "timestamp": now.isoformat(),
+                "confidence_score": confidence_score,
+                "frequency_count": existing.frequency_count
+            })
+            self._save_data()
+            logger.info(f"Updated existing low-confidence question: {existing_question_id}")
+            return existing_question_id
+        else:
+            # Create new question entry
             question_id = f"q_{len(self.questions) + 1}_{question_hash[:8]}"
             self.questions[question_id] = LowConfidenceQuestion(
                 id=question_id,
@@ -120,20 +141,6 @@ class QuestionTracker:
             self._save_data()
             logger.info(f"New low-confidence question flagged: {question_id}")
             return question_id
-        else:
-            # Update existing question
-            existing = self.questions[question_hash]
-            existing.frequency_count += 1
-            existing.last_asked = now
-            existing.audit_trail.append({
-                "action": "repeated_question",
-                "timestamp": now.isoformat(),
-                "confidence_score": confidence_score,
-                "frequency_count": existing.frequency_count
-            })
-            self._save_data()
-            logger.info(f"Updated existing low-confidence question: {existing.id}")
-            return existing.id
     
     def get_pending_questions(self, limit: int = 50) -> List[LowConfidenceQuestion]:
         """Get questions pending expert review, prioritized by frequency."""

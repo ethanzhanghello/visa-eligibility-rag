@@ -17,7 +17,7 @@ class ReviewStatus(str, Enum):
 class LowConfidenceQuestion(BaseModel):
     id: Optional[str] = None
     question: str = Field(..., min_length=1, max_length=1000)
-    language: str = Field(..., regex="^(en|zh|auto)$")
+    language: str = Field(..., pattern="^(en|zh|auto)$")
     confidence_score: float = Field(..., ge=0.0, le=1.0)
     frequency_count: int = Field(default=1, ge=1)
     first_asked: datetime = Field(default_factory=datetime.now)
@@ -33,7 +33,7 @@ class LowConfidenceQuestion(BaseModel):
 class ExpertReviewRequest(BaseModel):
     question_id: str
     expert_answer: str = Field(..., min_length=1, max_length=5000)
-    expert_sources: List[str] = Field(..., min_items=1)
+    expert_sources: List[str] = Field(..., min_length=1)
     expert_credentials: str = Field(..., min_length=1)
     confidence_level: ConfidenceLevel
     notes: Optional[str] = None
