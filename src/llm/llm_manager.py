@@ -26,11 +26,16 @@ class LLMManager:
             logger.info(f"Initializing LLMManager with model: {model_name}")
             self.model_name = model_name
             
-            # Initialize OpenAI client
+            # Initialize OpenAI client with minimal configuration
             api_key = os.getenv("OPENAI_API_KEY")
             if not api_key:
                 raise ValueError("OPENAI_API_KEY environment variable not set")
-            self.client = OpenAI(api_key=api_key)
+            
+            # Create client with minimal configuration to avoid proxy issues
+            self.client = OpenAI(
+                api_key=api_key,
+                # Remove any proxy settings that might cause issues
+            )
             
         except Exception as e:
             logger.exception(f"Failed to initialize LLMManager: {str(e)}")
