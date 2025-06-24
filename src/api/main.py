@@ -2,11 +2,13 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from src.retrieval.retrieval_manager import RetrievalManager
 from src.llm.llm_manager import LLMManager
+from src.api.cache_manager import CacheManager
 
 app = FastAPI()
 
 retrieval_manager = RetrievalManager()
 llm_manager = LLMManager()
+cache_manager = CacheManager()
 
 class QueryRequest(BaseModel):
     question: str
