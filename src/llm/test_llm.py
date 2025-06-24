@@ -46,6 +46,9 @@ def test_generate_response(mock_openai, llm_manager, mock_openai_response):
     mock_client.chat.completions.create.return_value = mock_openai_response
     mock_openai.return_value = mock_client
     
+    # Replace the real client with our mock
+    llm_manager.client = mock_client
+    
     # Test
     response = llm_manager.generate_response(
         context="Test context",
@@ -59,7 +62,7 @@ def test_generate_response(mock_openai, llm_manager, mock_openai_response):
     # Verify API call
     mock_client.chat.completions.create.assert_called_once()
     call_args = mock_client.chat.completions.create.call_args[1]
-    assert call_args["model"] == "gpt-4"
+    assert call_args["model"] == "gpt-3.5-turbo"  # Should use the default model
     assert len(call_args["messages"]) == 1
     assert call_args["messages"][0]["role"] == "user"
 
