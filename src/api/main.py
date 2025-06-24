@@ -5,6 +5,7 @@ from src.llm.llm_manager import LLMManager
 from src.api.cache_manager import CacheManager
 from src.api.confidence_manager import ConfidenceManager
 from src.api.question_tracker import QuestionTracker
+from src.api.faq_integration import FAQIntegrationManager
 from src.api.models import ExpertReviewRequest
 
 app = FastAPI()
@@ -14,6 +15,7 @@ llm_manager = LLMManager()
 cache_manager = CacheManager()
 confidence_manager = ConfidenceManager()
 question_tracker = QuestionTracker()
+faq_integration = FAQIntegrationManager()
 
 class QueryRequest(BaseModel):
     question: str
@@ -145,6 +147,70 @@ def get_expert_stats():
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving expert stats: {str(e)}")
+
+@app.get("/faq/pending-integrations")
+def get_pending_integrations():
+    """Get approved questions pending integration into FAQ database."""
+    try:
+        pending = faq_integration.get_pending_integrations()
+        return {
+            "pending_integrations": pending,
+            "total_pending": len(pending)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving pending integrations: {str(e)}")
+
+@app.post("/faq/integrate/{question_id}")
+def integrate_question_to_faq(question_id: str):
+    """Integrate an expert-reviewed question into the FAQ database."""
+    try:
+        # Validate the expert review first
+        validation = faq_integration.validate_expert_review(question_id)
+        if not validation["valid"]:
+            return {
+                "success": False,
+                "message": "Expert review validation failed",
+                "validation": validation
+            }
+        
+        # Integrate into FAQ
+        success = faq_integration.integrate_expert_review(question_id)
+        if not success:
+            raise HTTPException(status_code=404, detail="Question not found or not approved")
+        
+        return {
+            "success": True,
+            "message": "Question successfully integrated into FAQ database",
+            "question_id": question_id,
+            "validation": validation
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error integrating question: {str(e)}")
+
+@app.get("/faq/validate/{question_id}")
+def validate_expert_review(question_id: str):
+    """Validate an expert review for potential bias or issues."""
+    try:
+        validation = faq_integration.validate_expert_review(question_id)
+        return {
+            "question_id": question_id,
+            "validation": validation
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error validating expert review: {str(e)}")
+
+@app.get("/faq/integration-stats")
+def get_faq_integration_stats():
+    """Get statistics about FAQ integration."""
+    try:
+        stats = faq_integration.get_integration_stats()
+        return {
+            "faq_integration_statistics": stats
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error retrieving FAQ integration stats: {str(e)}")
 
 @app.post("/query")
 def query(request: QueryRequest):
