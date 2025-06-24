@@ -23,8 +23,9 @@ Green Card RAG Helper is an intelligent assistant designed to provide accurate, 
 - **Language Model**: OpenAI GPT-3.5-turbo
 - **Vector Database**: ChromaDB
 - **Embeddings**: Multilingual E5 Base Model
-- **Backend**: Python 3.9+
 - **API**: FastAPI
+- **Backend**: Python 3.9+
+- **Caching**: Redis (with in-memory fallback)
 - **Testing**: pytest
 - **Dependencies Management**: pip
 
@@ -35,6 +36,7 @@ Green Card RAG Helper is an intelligent assistant designed to provide accurate, 
 - RAM: 4GB minimum, 8GB recommended
 - Internet connection for API calls
 - FastAPI and Uvicorn
+- Redis (optional, falls back to in-memory cache)
 
 ## 💻 Installation
 1. Clone the repository:
@@ -53,6 +55,17 @@ pip install -r requirements.txt
 export OPENAI_API_KEY="your-api-key-here"
 ```
 
+4. (Optional) Install and start Redis for persistent caching:
+```bash
+# macOS
+brew install redis
+brew services start redis
+
+# Ubuntu/Debian
+sudo apt-get install redis-server
+sudo systemctl start redis
+```
+
 ## 🚀 Usage
 1. Populate the vector database:
 ```bash
@@ -64,7 +77,13 @@ python populate_db.py
 uvicorn src.api.main:app --reload
 ```
 
-3. Example queries:
+3. API Endpoints:
+- `POST /query` - Submit immigration questions
+- `GET /health` - Check API health
+- `POST /cache/clear` - Clear all cached responses
+- `GET /cache/stats` - View cache statistics
+
+4. Example queries:
 ```python
 from src.retrieval.retrieval_manager import RetrievalManager
 from src.llm.llm_manager import LLMManager
