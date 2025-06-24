@@ -44,10 +44,18 @@ def main():
     if not check_api_server():
         print("❌ API server is not running!")
         print("Please start the API server first:")
-        print("  uvicorn src.api.main:app --reload")
+        print("  python3 -c \"from src.api.main import app; import uvicorn; uvicorn.run(app, host='127.0.0.1', port=8000)\"")
         print("\nThen run this launcher again.")
         sys.exit(1)
     print("✅ API server is running")
+    
+    # Set environment variables to disable Streamlit telemetry
+    env = os.environ.copy()
+    env['STREAMLIT_SERVER_HEADLESS'] = 'true'
+    env['STREAMLIT_SERVER_RUN_ON_SAVE'] = 'false'
+    env['STREAMLIT_SERVER_ENABLE_STATIC_SERVING'] = 'true'
+    env['STREAMLIT_THEME_BASE'] = 'light'
+    env['STREAMLIT_BROWSER_GATHER_USAGE_STATS'] = 'false'
     
     # Launch UI
     print("Launching UI...")
@@ -59,8 +67,10 @@ def main():
         subprocess.run([
             sys.executable, "-m", "streamlit", "run", "ui/app.py",
             "--server.port", "8501",
-            "--server.address", "localhost"
-        ])
+            "--server.address", "localhost",
+            "--server.headless", "true",
+            "--browser.gatherUsageStats", "false"
+        ], env=env)
     except KeyboardInterrupt:
         print("\n👋 UI stopped by user")
     except Exception as e:
