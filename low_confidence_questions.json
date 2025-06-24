@@ -1,0 +1,70 @@
+{
+  "questions": {
+    "q_1_bfc95f4d": {
+      "id": "q_1_bfc95f4d",
+      "question": "What documents do I need for EB-2?",
+      "language": "en",
+      "confidence_score": 0.6604,
+      "frequency_count": 1,
+      "first_asked": "2025-06-24 15:06:24.663720",
+      "last_asked": "2025-06-24 15:06:24.663720",
+      "status": "pending",
+      "expert_reviewer": null,
+      "expert_answer": null,
+      "expert_sources": null,
+      "expert_credentials": null,
+      "review_date": null,
+      "audit_trail": [
+        {
+          "action": "flagged_for_review",
+          "timestamp": "2025-06-24T15:06:24.663720",
+          "confidence_score": 0.6604,
+          "frequency_count": 1
+        }
+      ]
+    },
+    "q_2_cf86b56b": {
+      "id": "q_2_cf86b56b",
+      "question": "what are different types of visas",
+      "language": "en",
+      "confidence_score": 0.6766666666666665,
+      "frequency_count": 1,
+      "first_asked": "2025-06-24 15:11:36.620797",
+      "last_asked": "2025-06-24 15:11:36.620797",
+      "status": "pending",
+      "expert_reviewer": null,
+      "expert_answer": null,
+      "expert_sources": null,
+      "expert_credentials": null,
+      "review_date": null,
+      "audit_trail": [
+        {
+          "action": "flagged_for_review",
+          "timestamp": "2025-06-24T15:11:36.620797",
+          "confidence_score": 0.6766666666666665,
+          "frequency_count": 1
+        }
+      ]
+    }
+  },
+  "frequency": {
+    "bfc95f4d24bf95e5996584a641053c08": {
+      "question_hash": "bfc95f4d24bf95e5996584a641053c08",
+      "question": "What documents do I need for EB-2?",
+      "language": "en",
+      "frequency_count": 1,
+      "first_seen": "2025-06-24 15:06:24.663720",
+      "last_seen": "2025-06-24 15:06:24.663720",
+      "average_confidence": 0.6604
+    },
+    "cf86b56b6f2674ff8a9808b00db657b3": {
+      "question_hash": "cf86b56b6f2674ff8a9808b00db657b3",
+      "question": "what are different types of visas",
+      "language": "en",
+      "frequency_count": 1,
+      "first_seen": "2025-06-24 15:11:36.620797",
+      "last_seen": "2025-06-24 15:11:36.620797",
+      "average_confidence": 0.6766666666666665
+    }
+  }
+}
