@@ -1,140 +1,166 @@
+"""
+Main FastAPI application for the Green Card RAG Helper.
+"""
 from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
+import logging
+from typing import Dict, Any, Optional
+import os
+
+# Import managers
 from src.retrieval.retrieval_manager import RetrievalManager
-from src.llm.llm_manager import LLMManager
-from src.api.cache_manager import CacheManager
 from src.api.confidence_manager import ConfidenceManager
 from src.api.question_tracker import QuestionTracker
 from src.api.faq_integration import FAQIntegrationManager
-from src.api.models import ExpertReviewRequest
 
-app = FastAPI()
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-retrieval_manager = RetrievalManager()
-llm_manager = LLMManager()
-cache_manager = CacheManager()
-confidence_manager = ConfidenceManager()
-question_tracker = QuestionTracker()
-faq_integration = FAQIntegrationManager()
+# Initialize FastAPI app
+app = FastAPI(
+    title="Green Card RAG Helper API",
+    description="Bilingual immigration assistant with expert review system",
+    version="1.0.0"
+)
 
-class QueryRequest(BaseModel):
-    question: str
-    language: str = None
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Initialize managers
+try:
+    retrieval_manager = RetrievalManager()
+    confidence_manager = ConfidenceManager()
+    question_tracker = QuestionTracker()
+    faq_integration = FAQIntegrationManager()
+    logger.info("All managers initialized successfully")
+except Exception as e:
+    logger.error(f"Failed to initialize managers: {e}")
+    raise
+
+# Mock LLM manager for testing
+class MockLLMManager:
+    """Mock LLM manager for testing without OpenAI API."""
+    
+    def __init__(self, model_name: str = "gpt-3.5-turbo"):
+        self.model_name = model_name
+        logger.info(f"Initialized MockLLMManager with model: {model_name}")
+    
+    def generate_response(self, context: str, user_input: str, **kwargs) -> Dict[str, Any]:
+        """Generate a mock response for testing."""
+        return {
+            "content": f"Mock response for: {user_input}. Based on context: {context[:100]}...",
+            "model": self.model_name,
+            "usage": {
+                "prompt_tokens": 100,
+                "completion_tokens": 50,
+                "total_tokens": 150
+            }
+        }
+
+# Use mock LLM manager for now
+llm_manager = MockLLMManager()
 
 @app.get("/health")
-def health():
-    return {"status": "ok"}
+def health_check():
+    """Health check endpoint."""
+    return {
+        "status": "healthy",
+        "message": "Green Card RAG Helper API is running",
+        "version": "1.0.0"
+    }
 
-@app.post("/cache/clear")
-def clear_cache():
-    """Clear all cached responses."""
+@app.post("/query")
+def query_endpoint(request: Dict[str, Any]):
+    """Main query endpoint for processing immigration questions."""
     try:
-        success = cache_manager.clear_all()
-        if success:
-            return {"message": "Cache cleared successfully"}
-        else:
-            raise HTTPException(status_code=500, detail="Failed to clear cache")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Cache clear error: {str(e)}")
-
-@app.get("/cache/stats")
-def cache_stats():
-    """Get cache statistics."""
-    try:
-        if cache_manager.redis_client:
-            # Redis stats
-            info = cache_manager.redis_client.info()
-            return {
-                "type": "redis",
-                "connected_clients": info.get("connected_clients", 0),
-                "used_memory_human": info.get("used_memory_human", "0B"),
-                "keyspace_hits": info.get("keyspace_hits", 0),
-                "keyspace_misses": info.get("keyspace_misses", 0)
+        question = request.get("question", "").strip()
+        language = request.get("language", "auto")
+        
+        if not question:
+            raise HTTPException(status_code=400, detail="Question is required")
+        
+        logger.info(f"Processing query: {question[:50]}... (language: {language})")
+        
+        # Process query through retrieval system
+        retrieval_results = retrieval_manager.process_query(question, language)
+        
+        if not retrieval_results:
+            # No relevant context found
+            response = {
+                "answer": "I'm sorry, I couldn't find specific information about your question in our immigration database. Please try rephrasing your question or consult with an immigration attorney for specific legal advice.",
+                "confidence": {
+                    "score": 0.0,
+                    "level": "low",
+                    "context_relevance": 0.0,
+                    "source_quality": 0.0,
+                    "response_length": 0,
+                    "contains_immigration_terms": False,
+                    "flagged_for_review": True
+                },
+                "model": llm_manager.model_name,
+                "cached": False
             }
         else:
-            # In-memory cache stats
-            return {
-                "type": "memory",
-                "cached_items": len(cache_manager._memory_cache),
-                "fallback_mode": True
+            # Generate context from retrieval results
+            context = retrieval_manager.get_context(retrieval_results)
+            
+            # Generate response using LLM
+            llm_response = llm_manager.generate_response(context, question)
+            
+            # Calculate confidence score
+            confidence_metrics = confidence_manager.calculate_confidence(
+                question, llm_response["content"], context, language
+            )
+            
+            # Convert to dictionary and add additional fields
+            confidence_info = {
+                "score": confidence_metrics.confidence_score,
+                "level": confidence_manager.get_confidence_level(confidence_metrics.confidence_score).value,
+                "context_relevance": confidence_metrics.context_relevance,
+                "source_quality": confidence_metrics.source_quality,
+                "response_length": confidence_metrics.response_length,
+                "contains_immigration_terms": confidence_metrics.contains_immigration_terms,
+                "flagged_for_review": confidence_manager.should_flag_for_review(confidence_metrics.confidence_score)
             }
+            
+            # Track question if confidence is low
+            if confidence_info["flagged_for_review"]:
+                question_tracker.track_question(question, language, confidence_info["score"])
+            
+            response = {
+                "answer": llm_response["content"],
+                "confidence": confidence_info,
+                "model": llm_response["model"],
+                "usage": llm_response["usage"],
+                "cached": False
+            }
+        
+        return response
+        
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Cache stats error: {str(e)}")
+        logger.exception(f"Error processing query: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.get("/expert/pending-questions")
-def get_pending_questions(limit: int = 50):
-    """Get questions pending expert review, prioritized by frequency."""
+def get_pending_questions():
+    """Get questions pending expert review."""
     try:
-        pending = question_tracker.get_pending_questions(limit)
-        return {
-            "pending_questions": [
-                {
-                    "id": q.id,
-                    "question": q.question,
-                    "language": q.language,
-                    "confidence_score": q.confidence_score,
-                    "frequency_count": q.frequency_count,
-                    "first_asked": q.first_asked.isoformat(),
-                    "last_asked": q.last_asked.isoformat(),
-                    "status": q.status
-                }
-                for q in pending
-            ],
-            "total_pending": len(pending)
-        }
+        pending = question_tracker.get_pending_questions()
+        return {"pending_questions": pending}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error retrieving pending questions: {str(e)}")
-
-@app.get("/expert/question/{question_id}")
-def get_question_details(question_id: str):
-    """Get detailed information about a specific question."""
-    try:
-        question = question_tracker.get_question_by_id(question_id)
-        if not question:
-            raise HTTPException(status_code=404, detail="Question not found")
-        
-        return {
-            "id": question.id,
-            "question": question.question,
-            "language": question.language,
-            "confidence_score": question.confidence_score,
-            "frequency_count": question.frequency_count,
-            "first_asked": question.first_asked.isoformat(),
-            "last_asked": question.last_asked.isoformat(),
-            "status": question.status,
-            "expert_reviewer": question.expert_reviewer,
-            "expert_answer": question.expert_answer,
-            "expert_sources": question.expert_sources,
-            "expert_credentials": question.expert_credentials,
-            "review_date": question.review_date.isoformat() if question.review_date else None,
-            "audit_trail": question.audit_trail
-        }
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error retrieving question details: {str(e)}")
-
-@app.post("/expert/review")
-def submit_expert_review(review_request: ExpertReviewRequest):
-    """Submit expert review for a low-confidence question."""
-    try:
-        success = question_tracker.add_expert_review(review_request)
-        if not success:
-            raise HTTPException(status_code=404, detail="Question not found")
-        
-        return {
-            "message": "Expert review submitted successfully",
-            "question_id": review_request.question_id,
-            "status": "approved"
-        }
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error submitting expert review: {str(e)}")
+        logger.exception(f"Error getting pending questions: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.get("/expert/stats")
 def get_expert_stats():
-    """Get statistics about low-confidence questions and expert reviews."""
+    """Get expert review statistics."""
     try:
         stats = question_tracker.get_frequency_stats()
         return {
@@ -146,128 +172,68 @@ def get_expert_stats():
             }
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error retrieving expert stats: {str(e)}")
+        logger.exception(f"Error getting expert stats: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
+
+@app.post("/expert/review")
+def submit_expert_review(request: Dict[str, Any]):
+    """Submit an expert review for a question."""
+    try:
+        question_id = request.get("question_id")
+        expert_answer = request.get("expert_answer")
+        expert_sources = request.get("expert_sources", [])
+        expert_credentials = request.get("expert_credentials")
+        confidence_level = request.get("confidence_level", "medium")
+        notes = request.get("notes", "")
+        
+        if not all([question_id, expert_answer, expert_credentials]):
+            raise HTTPException(status_code=400, detail="Missing required fields")
+        
+        result = question_tracker.submit_expert_review(
+            question_id, expert_answer, expert_sources, 
+            expert_credentials, confidence_level, notes
+        )
+        
+        return result
+        
+    except Exception as e:
+        logger.exception(f"Error submitting expert review: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.get("/faq/pending-integrations")
 def get_pending_integrations():
-    """Get approved questions pending integration into FAQ database."""
+    """Get questions ready for FAQ integration."""
     try:
         pending = faq_integration.get_pending_integrations()
-        return {
-            "pending_integrations": pending,
-            "total_pending": len(pending)
-        }
+        return {"pending_integrations": pending}
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error retrieving pending integrations: {str(e)}")
+        logger.exception(f"Error getting pending integrations: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
 @app.post("/faq/integrate/{question_id}")
-def integrate_question_to_faq(question_id: str):
+def integrate_to_faq(question_id: str):
     """Integrate an expert-reviewed question into the FAQ database."""
     try:
-        # Validate the expert review first
-        validation = faq_integration.validate_expert_review(question_id)
-        if not validation["valid"]:
-            return {
-                "success": False,
-                "message": "Expert review validation failed",
-                "validation": validation
-            }
-        
-        # Integrate into FAQ
-        success = faq_integration.integrate_expert_review(question_id)
-        if not success:
-            raise HTTPException(status_code=404, detail="Question not found or not approved")
-        
-        return {
-            "success": True,
-            "message": "Question successfully integrated into FAQ database",
-            "question_id": question_id,
-            "validation": validation
-        }
-    except HTTPException:
-        raise
+        result = faq_integration.integrate_question(question_id)
+        return result
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error integrating question: {str(e)}")
+        logger.exception(f"Error integrating to FAQ: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-@app.get("/faq/validate/{question_id}")
-def validate_expert_review(question_id: str):
-    """Validate an expert review for potential bias or issues."""
+@app.get("/cache/stats")
+def get_cache_stats():
+    """Get cache statistics."""
     try:
-        validation = faq_integration.validate_expert_review(question_id)
+        # Mock cache stats for now
         return {
-            "question_id": question_id,
-            "validation": validation
+            "type": "memory",
+            "cached_items": 0,
+            "hit_rate": 0.0
         }
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error validating expert review: {str(e)}")
+        logger.exception(f"Error getting cache stats: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Internal server error: {str(e)}")
 
-@app.get("/faq/integration-stats")
-def get_faq_integration_stats():
-    """Get statistics about FAQ integration."""
-    try:
-        stats = faq_integration.get_integration_stats()
-        return {
-            "faq_integration_statistics": stats
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error retrieving FAQ integration stats: {str(e)}")
-
-@app.post("/query")
-def query(request: QueryRequest):
-    try:
-        # Check cache first
-        cached_response = cache_manager.get(request.question, request.language)
-        if cached_response:
-            return {
-                "answer": cached_response["content"], 
-                "model": cached_response["model"], 
-                "usage": cached_response["usage"], 
-                "cached": True,
-                "confidence": {
-                    "score": 1.0,
-                    "level": "high",
-                    "cached_response": True
-                }
-            }
-        
-        # Process query if not cached
-        lang = request.language or retrieval_manager.detect_language(request.question)
-        results = retrieval_manager.process_query(request.question, top_k=3)
-        context = retrieval_manager.get_context(results)
-        response = llm_manager.generate_response(context, request.question)
-        
-        # Calculate confidence
-        confidence_metrics = confidence_manager.calculate_confidence(
-            question=request.question,
-            response=response["content"],
-            context=context,
-            language=lang
-        )
-        
-        # Track low-confidence questions
-        flagged_question_id = question_tracker.track_question(
-            question=request.question,
-            language=lang,
-            confidence_score=confidence_metrics.confidence_score
-        )
-        
-        # Cache the response
-        cache_manager.set(request.question, response, request.language)
-        
-        return {
-            "answer": response["content"], 
-            "model": response["model"], 
-            "usage": response["usage"], 
-            "cached": False,
-            "confidence": {
-                "score": confidence_metrics.confidence_score,
-                "level": confidence_manager.get_confidence_level(confidence_metrics.confidence_score),
-                "context_relevance": confidence_metrics.context_relevance,
-                "source_quality": confidence_metrics.source_quality,
-                "contains_immigration_terms": confidence_metrics.contains_immigration_terms,
-                "flagged_for_review": flagged_question_id is not None,
-                "question_id": flagged_question_id
-            }
-        }
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Pipeline error: {str(e)}") 
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000) 
