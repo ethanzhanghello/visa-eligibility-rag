@@ -3,12 +3,16 @@ from pydantic import BaseModel
 from src.retrieval.retrieval_manager import RetrievalManager
 from src.llm.llm_manager import LLMManager
 from src.api.cache_manager import CacheManager
+from src.api.confidence_manager import ConfidenceManager
+from src.api.question_tracker import QuestionTracker
 
 app = FastAPI()
 
 retrieval_manager = RetrievalManager()
 llm_manager = LLMManager()
 cache_manager = CacheManager()
+confidence_manager = ConfidenceManager()
+question_tracker = QuestionTracker()
 
 class QueryRequest(BaseModel):
     question: str
@@ -60,7 +64,17 @@ def query(request: QueryRequest):
         # Check cache first
         cached_response = cache_manager.get(request.question, request.language)
         if cached_response:
-            return {"answer": cached_response["content"], "model": cached_response["model"], "usage": cached_response["usage"], "cached": True}
+            return {
+                "answer": cached_response["content"], 
+                "model": cached_response["model"], 
+                "usage": cached_response["usage"], 
+                "cached": True,
+                "confidence": {
+                    "score": 1.0,
+                    "level": "high",
+                    "cached_response": True
+                }
+            }
         
         # Process query if not cached
         lang = request.language or retrieval_manager.detect_language(request.question)
@@ -68,9 +82,38 @@ def query(request: QueryRequest):
         context = retrieval_manager.get_context(results)
         response = llm_manager.generate_response(context, request.question)
         
+        # Calculate confidence
+        confidence_metrics = confidence_manager.calculate_confidence(
+            question=request.question,
+            response=response["content"],
+            context=context,
+            language=lang
+        )
+        
+        # Track low-confidence questions
+        flagged_question_id = question_tracker.track_question(
+            question=request.question,
+            language=lang,
+            confidence_score=confidence_metrics.confidence_score
+        )
+        
         # Cache the response
         cache_manager.set(request.question, response, request.language)
         
-        return {"answer": response["content"], "model": response["model"], "usage": response["usage"], "cached": False}
+        return {
+            "answer": response["content"], 
+            "model": response["model"], 
+            "usage": response["usage"], 
+            "cached": False,
+            "confidence": {
+                "score": confidence_metrics.confidence_score,
+                "level": confidence_manager.get_confidence_level(confidence_metrics.confidence_score),
+                "context_relevance": confidence_metrics.context_relevance,
+                "source_quality": confidence_metrics.source_quality,
+                "contains_immigration_terms": confidence_metrics.contains_immigration_terms,
+                "flagged_for_review": flagged_question_id is not None,
+                "question_id": flagged_question_id
+            }
+        }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Pipeline error: {str(e)}") 
