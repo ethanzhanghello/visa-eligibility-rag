@@ -4,6 +4,12 @@ import json
 import time
 from datetime import datetime
 import pandas as pd
+import os
+
+# Configure Streamlit to disable telemetry
+os.environ['STREAMLIT_SERVER_HEADLESS'] = 'true'
+os.environ['STREAMLIT_SERVER_RUN_ON_SAVE'] = 'false'
+os.environ['STREAMLIT_SERVER_ENABLE_STATIC_SERVING'] = 'true'
 
 # Configuration
 API_BASE_URL = "http://localhost:8000"
