@@ -82,7 +82,7 @@ class QuestionTracker:
         if question_hash in self.frequency_tracker:
             freq = self.frequency_tracker[question_hash]
             freq.frequency_count += 1
-            freq.last_seen = now
+            freq.last_seen = now.isoformat()
             freq.average_confidence = (
                 (freq.average_confidence * (freq.frequency_count - 1) + confidence_score) 
                 / freq.frequency_count
@@ -93,8 +93,8 @@ class QuestionTracker:
                 question=question,
                 language=language,
                 frequency_count=1,
-                first_seen=now,
-                last_seen=now,
+                first_seen=now.isoformat(),
+                last_seen=now.isoformat(),
                 average_confidence=confidence_score
             )
         
@@ -109,7 +109,7 @@ class QuestionTracker:
             # Update existing question
             existing = self.questions[existing_question_id]
             existing.frequency_count += 1
-            existing.last_asked = now
+            existing.last_asked = now.isoformat()
             existing.audit_trail.append({
                 "action": "repeated_question",
                 "timestamp": now.isoformat(),
@@ -128,8 +128,8 @@ class QuestionTracker:
                 language=language,
                 confidence_score=confidence_score,
                 frequency_count=1,
-                first_asked=now,
-                last_asked=now,
+                first_asked=now.isoformat(),
+                last_asked=now.isoformat(),
                 status=ReviewStatus.PENDING,
                 audit_trail=[{
                     "action": "flagged_for_review",
@@ -189,7 +189,7 @@ class QuestionTracker:
         question.expert_answer = review_request.expert_answer
         question.expert_sources = review_request.expert_sources
         question.expert_credentials = review_request.expert_credentials
-        question.review_date = datetime.now()
+        question.review_date = datetime.now().isoformat()
         question.status = ReviewStatus.APPROVED
         
         question.audit_trail.append({
