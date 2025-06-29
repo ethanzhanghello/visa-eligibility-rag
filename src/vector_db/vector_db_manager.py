@@ -8,6 +8,8 @@ from typing import List, Dict, Any, Optional
 from chromadb.config import Settings
 import os
 
+from src.config import config
+
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -26,20 +28,19 @@ class VectorDBManager:
             cls._instance = super(VectorDBManager, cls).__new__(cls)
         return cls._instance
     
-    def __init__(self, collection_name: str = "green-card-faq"):
+    def __init__(self, collection_name: Optional[str] = None):
         """Initialize the vector database manager.
         
         Args:
-            collection_name (str): Name of the collection to use.
+            collection_name (str): Name of the collection to use. If None, uses config default.
         """
         if hasattr(self, 'initialized'):
             return
             
-        self.collection_name = collection_name
+        self.collection_name = collection_name or config.database.collection_name
         try:
-            # Set persistent directory for ChromaDB
-            project_root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-            persist_dir = os.path.join(project_root, "chroma_db")
+            # Set persistent directory for ChromaDB from config
+            persist_dir = config.get_database_path()
             
             # Create persistent directory if it doesn't exist
             os.makedirs(persist_dir, exist_ok=True)
@@ -49,7 +50,7 @@ class VectorDBManager:
                 VectorDBManager._client = chromadb.PersistentClient(path=persist_dir)
             
             self.client = VectorDBManager._client
-            logger.info(f"Initializing VectorDBManager with collection: {collection_name} (persistent at {persist_dir})")
+            logger.info(f"Initializing VectorDBManager with collection: {self.collection_name} (persistent at {persist_dir})")
             
             # Get or create collection
             self.collection = self._get_or_create_collection()
@@ -126,22 +127,26 @@ class VectorDBManager:
     def search_similar(
         self,
         query_embedding: np.ndarray,
-        n_results: int = 3,
+        n_results: Optional[int] = None,
         where: Optional[Dict] = None,
-        similarity_threshold: float = 0.5  # Lowered from default
+        similarity_threshold: Optional[float] = None
     ) -> List[Dict[str, Any]]:
         """Search for similar documents in the collection.
         
         Args:
             query_embedding (np.ndarray): Query embedding vector.
-            n_results (int): Number of results to return.
+            n_results (Optional[int]): Number of results to return. If None, uses config default.
             where (Optional[Dict]): Filter conditions.
-            similarity_threshold (float): Minimum similarity score to include a result.
+            similarity_threshold (Optional[float]): Minimum similarity score to include a result. If None, uses config default.
             
         Returns:
             List[Dict[str, Any]]: List of similar documents with metadata.
         """
         try:
+            # Use config defaults if not provided
+            n_results = n_results or config.database.max_results
+            similarity_threshold = similarity_threshold or config.database.similarity_threshold
+            
             # Log collection state
             doc_count = self.collection.count()
             logger.info(f"Collection state: {doc_count} documents")
@@ -200,7 +205,7 @@ class VectorDBManager:
             return []
     
     def get_document(self, doc_id: str) -> Optional[Dict[str, Any]]:
-        """Get a document by ID.
+        """Get a specific document by ID.
         
         Args:
             doc_id (str): Document ID.
@@ -210,24 +215,21 @@ class VectorDBManager:
         """
         try:
             result = self.collection.get(ids=[doc_id])
-            if not result['ids']:
-                return None
-                
-            return {
-                'id': result['ids'][0],
-                'question': result['metadatas'][0].get('question', ''),
-                'answer': result['metadatas'][0].get('answer', '')
-            }
-            
+            if result and result['documents']:
+                return {
+                    'document': result['documents'][0],
+                    'metadata': result['metadatas'][0] if result['metadatas'] else {}
+                }
+            return None
         except Exception as e:
-            logger.exception(f"Failed to get document: {str(e)}")
+            logger.exception(f"Failed to get document {doc_id}: {str(e)}")
             return None
     
     def delete_document(self, doc_id: str) -> bool:
-        """Delete a document by ID.
+        """Delete a document from the collection.
         
         Args:
-            doc_id (str): Document ID.
+            doc_id (str): Document ID to delete.
             
         Returns:
             bool: True if successful, False otherwise.
@@ -236,9 +238,8 @@ class VectorDBManager:
             self.collection.delete(ids=[doc_id])
             logger.info(f"Successfully deleted document: {doc_id}")
             return True
-            
         except Exception as e:
-            logger.exception(f"Failed to delete document: {str(e)}")
+            logger.exception(f"Failed to delete document {doc_id}: {str(e)}")
             return False
     
     def clear_collection(self) -> bool:
@@ -251,7 +252,28 @@ class VectorDBManager:
             self.collection.delete(where={})
             logger.info("Successfully cleared collection")
             return True
-            
         except Exception as e:
             logger.exception(f"Failed to clear collection: {str(e)}")
-            return False 
+            return False
+    
+    def get_collection_stats(self) -> Dict[str, Any]:
+        """Get statistics about the collection.
+        
+        Returns:
+            Dict[str, Any]: Collection statistics.
+        """
+        try:
+            count = self.collection.count()
+            return {
+                "collection_name": self.collection_name,
+                "document_count": count,
+                "is_empty": count == 0
+            }
+        except Exception as e:
+            logger.exception(f"Failed to get collection stats: {str(e)}")
+            return {
+                "collection_name": self.collection_name,
+                "document_count": 0,
+                "is_empty": True,
+                "error": str(e)
+            } 
