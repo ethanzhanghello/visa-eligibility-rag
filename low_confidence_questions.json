@@ -5,9 +5,9 @@
       "question": "What documents do I need for EB-2?",
       "language": "en",
       "confidence_score": 0.6604,
-      "frequency_count": 1,
+      "frequency_count": 4,
       "first_asked": "2025-06-24 15:06:24.663720",
-      "last_asked": "2025-06-24 15:06:24.663720",
+      "last_asked": "2025-06-29 15:47:35.082223",
       "status": "pending",
       "expert_reviewer": null,
       "expert_answer": null,
@@ -20,6 +20,24 @@
           "timestamp": "2025-06-24T15:06:24.663720",
           "confidence_score": 0.6604,
           "frequency_count": 1
+        },
+        {
+          "action": "repeated_question",
+          "timestamp": "2025-06-29T15:40:14.571399",
+          "confidence_score": 0.6304,
+          "frequency_count": 2
+        },
+        {
+          "action": "repeated_question",
+          "timestamp": "2025-06-29T15:46:24.636817",
+          "confidence_score": 0.6304,
+          "frequency_count": 3
+        },
+        {
+          "action": "repeated_question",
+          "timestamp": "2025-06-29T15:47:35.082223",
+          "confidence_score": 0.5087999999999999,
+          "frequency_count": 4
         }
       ]
     },
@@ -45,6 +63,29 @@
           "frequency_count": 1
         }
       ]
+    },
+    "q_3_6bb8730e": {
+      "id": "q_3_6bb8730e",
+      "question": "\u6211\u9700\u8981\u54ea\u4e9b\u6587\u4ef6\u6765\u7533\u8bf7\u7eff\u5361\uff1f",
+      "language": "zh",
+      "confidence_score": 0.36639999999999995,
+      "frequency_count": 1,
+      "first_asked": "2025-06-29T15:49:12.568574",
+      "last_asked": "2025-06-29T15:49:12.568574",
+      "status": "pending",
+      "expert_reviewer": null,
+      "expert_answer": null,
+      "expert_sources": null,
+      "expert_credentials": null,
+      "review_date": null,
+      "audit_trail": [
+        {
+          "action": "flagged_for_review",
+          "timestamp": "2025-06-29T15:49:12.568574",
+          "confidence_score": 0.36639999999999995,
+          "frequency_count": 1
+        }
+      ]
     }
   },
   "frequency": {
@@ -52,10 +93,10 @@
       "question_hash": "bfc95f4d24bf95e5996584a641053c08",
       "question": "What documents do I need for EB-2?",
       "language": "en",
-      "frequency_count": 1,
+      "frequency_count": 4,
       "first_seen": "2025-06-24 15:06:24.663720",
-      "last_seen": "2025-06-24 15:06:24.663720",
-      "average_confidence": 0.6604
+      "last_seen": "2025-06-29 15:47:35.082223",
+      "average_confidence": 0.6074999999999999
     },
     "cf86b56b6f2674ff8a9808b00db657b3": {
       "question_hash": "cf86b56b6f2674ff8a9808b00db657b3",
@@ -65,6 +106,15 @@
       "first_seen": "2025-06-24 15:11:36.620797",
       "last_seen": "2025-06-24 15:11:36.620797",
       "average_confidence": 0.6766666666666665
+    },
+    "6bb8730e58da621d5d4a22cd84d335a9": {
+      "question_hash": "6bb8730e58da621d5d4a22cd84d335a9",
+      "question": "\u6211\u9700\u8981\u54ea\u4e9b\u6587\u4ef6\u6765\u7533\u8bf7\u7eff\u5361\uff1f",
+      "language": "zh",
+      "frequency_count": 1,
+      "first_seen": "2025-06-29T15:49:12.568574",
+      "last_seen": "2025-06-29T15:49:12.568574",
+      "average_confidence": 0.36639999999999995
     }
   }
 }
