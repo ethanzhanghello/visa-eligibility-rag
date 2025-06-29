@@ -1,21 +1,23 @@
 import hashlib
 import logging
 import re
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Optional
 from datetime import datetime
 from src.api.models import ConfidenceMetrics, ConfidenceLevel, LowConfidenceQuestion, QuestionFrequency
+from src.config import config
 
 logger = logging.getLogger(__name__)
 
 class ConfidenceManager:
-    def __init__(self, confidence_threshold: float = 0.7):
+    def __init__(self, confidence_threshold: Optional[float] = None):
         """
         Initialize confidence manager.
         
         Args:
-            confidence_threshold: Threshold below which questions are flagged for expert review
+            confidence_threshold: Threshold below which questions are flagged for expert review.
+                                 If None, uses config default.
         """
-        self.confidence_threshold = confidence_threshold
+        self.confidence_threshold = confidence_threshold or config.confidence.threshold
         self.immigration_terms = [
             "visa", "green card", "immigration", "USCIS", "form", "petition",
             "permanent resident", "citizenship", "naturalization", "asylum",
@@ -55,7 +57,7 @@ class ConfidenceManager:
         response_length = len(response)
         contains_immigration_terms = self._check_immigration_terms(response, language)
         
-        # Calculate overall confidence score
+        # Calculate overall confidence score using config weights
         confidence_score = self._calculate_overall_confidence(
             context_relevance, source_quality, response_length, contains_immigration_terms
         )
@@ -131,13 +133,13 @@ class ConfidenceManager:
     
     def _calculate_overall_confidence(self, context_relevance: float, source_quality: float, 
                                     response_length: int, contains_immigration_terms: bool) -> float:
-        """Calculate overall confidence score."""
-        # Weighted combination of factors
+        """Calculate overall confidence score using config weights."""
+        # Use config weights for weighted combination
         confidence = (
-            context_relevance * 0.4 +
-            source_quality * 0.3 +
-            min(response_length / 500, 1.0) * 0.2 +
-            (0.1 if contains_immigration_terms else 0.0)
+            context_relevance * config.confidence.context_weight +
+            source_quality * config.confidence.source_weight +
+            min(response_length / 500, 1.0) * config.confidence.length_weight +
+            (config.confidence.terms_weight if contains_immigration_terms else 0.0)
         )
         
         return min(confidence, 1.0)
@@ -158,4 +160,20 @@ class ConfidenceManager:
     def generate_question_hash(self, question: str, language: str) -> str:
         """Generate a unique hash for a question."""
         normalized = f"{question.strip().lower()}:{language}"
-        return hashlib.md5(normalized.encode()).hexdigest() 
+        return hashlib.md5(normalized.encode()).hexdigest()
+    
+    def get_config_summary(self) -> Dict[str, Any]:
+        """Get a summary of the current confidence configuration."""
+        return {
+            "threshold": self.confidence_threshold,
+            "weights": {
+                "context": config.confidence.context_weight,
+                "source": config.confidence.source_weight,
+                "length": config.confidence.length_weight,
+                "terms": config.confidence.terms_weight
+            },
+            "immigration_terms_count": {
+                "english": len(self.immigration_terms),
+                "chinese": len(self.chinese_immigration_terms)
+            }
+        } 
