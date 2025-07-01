@@ -86,6 +86,98 @@
           "frequency_count": 1
         }
       ]
+    },
+    "q_4_ad23f4aa": {
+      "id": "q_4_ad23f4aa",
+      "question": "Test question for UI",
+      "language": "en",
+      "confidence_score": 0.34359999999999996,
+      "frequency_count": 1,
+      "first_asked": "2025-06-29T15:55:26.173415",
+      "last_asked": "2025-06-29T15:55:26.173415",
+      "status": "pending",
+      "expert_reviewer": null,
+      "expert_answer": null,
+      "expert_sources": null,
+      "expert_credentials": null,
+      "review_date": null,
+      "audit_trail": [
+        {
+          "action": "flagged_for_review",
+          "timestamp": "2025-06-29T15:55:26.173415",
+          "confidence_score": 0.34359999999999996,
+          "frequency_count": 1
+        }
+      ]
+    },
+    "q_5_15a4ea79": {
+      "id": "q_5_15a4ea79",
+      "question": "how to get a visa",
+      "language": "auto",
+      "confidence_score": 0.5464,
+      "frequency_count": 1,
+      "first_asked": "2025-06-29T15:56:14.926945",
+      "last_asked": "2025-06-29T15:56:14.926945",
+      "status": "pending",
+      "expert_reviewer": null,
+      "expert_answer": null,
+      "expert_sources": null,
+      "expert_credentials": null,
+      "review_date": null,
+      "audit_trail": [
+        {
+          "action": "flagged_for_review",
+          "timestamp": "2025-06-29T15:56:14.926945",
+          "confidence_score": 0.5464,
+          "frequency_count": 1
+        }
+      ]
+    },
+    "q_6_fa49fa32": {
+      "id": "q_6_fa49fa32",
+      "question": "what is eb-5",
+      "language": "auto",
+      "confidence_score": 0.6316,
+      "frequency_count": 1,
+      "first_asked": "2025-06-29T15:56:28.318689",
+      "last_asked": "2025-06-29T15:56:28.318689",
+      "status": "pending",
+      "expert_reviewer": null,
+      "expert_answer": null,
+      "expert_sources": null,
+      "expert_credentials": null,
+      "review_date": null,
+      "audit_trail": [
+        {
+          "action": "flagged_for_review",
+          "timestamp": "2025-06-29T15:56:28.318689",
+          "confidence_score": 0.6316,
+          "frequency_count": 1
+        }
+      ]
+    },
+    "q_7_8cb9187b": {
+      "id": "q_7_8cb9187b",
+      "question": "what is eb-5",
+      "language": "en",
+      "confidence_score": 0.5896,
+      "frequency_count": 1,
+      "first_asked": "2025-06-29T15:56:31.536365",
+      "last_asked": "2025-06-29T15:56:31.536365",
+      "status": "pending",
+      "expert_reviewer": null,
+      "expert_answer": null,
+      "expert_sources": null,
+      "expert_credentials": null,
+      "review_date": null,
+      "audit_trail": [
+        {
+          "action": "flagged_for_review",
+          "timestamp": "2025-06-29T15:56:31.536365",
+          "confidence_score": 0.5896,
+          "frequency_count": 1
+        }
+      ]
     }
   },
   "frequency": {
@@ -115,6 +207,42 @@
       "first_seen": "2025-06-29T15:49:12.568574",
       "last_seen": "2025-06-29T15:49:12.568574",
       "average_confidence": 0.36639999999999995
+    },
+    "ad23f4aa5806638607286be840b60292": {
+      "question_hash": "ad23f4aa5806638607286be840b60292",
+      "question": "Test question for UI",
+      "language": "en",
+      "frequency_count": 1,
+      "first_seen": "2025-06-29T15:55:26.173415",
+      "last_seen": "2025-06-29T15:55:26.173415",
+      "average_confidence": 0.34359999999999996
+    },
+    "15a4ea7926cfac727272443b1e29bdd4": {
+      "question_hash": "15a4ea7926cfac727272443b1e29bdd4",
+      "question": "how to get a visa",
+      "language": "auto",
+      "frequency_count": 1,
+      "first_seen": "2025-06-29T15:56:14.926945",
+      "last_seen": "2025-06-29T15:56:14.926945",
+      "average_confidence": 0.5464
+    },
+    "fa49fa32d34b68339c3d286d614f55bf": {
+      "question_hash": "fa49fa32d34b68339c3d286d614f55bf",
+      "question": "what is eb-5",
+      "language": "auto",
+      "frequency_count": 1,
+      "first_seen": "2025-06-29T15:56:28.318689",
+      "last_seen": "2025-06-29T15:56:28.318689",
+      "average_confidence": 0.6316
+    },
+    "8cb9187bad786f2667bbdf8b7a0c6ffd": {
+      "question_hash": "8cb9187bad786f2667bbdf8b7a0c6ffd",
+      "question": "what is eb-5",
+      "language": "en",
+      "frequency_count": 1,
+      "first_seen": "2025-06-29T15:56:31.536365",
+      "last_seen": "2025-06-29T15:56:31.536365",
+      "average_confidence": 0.5896
     }
   }
 }
