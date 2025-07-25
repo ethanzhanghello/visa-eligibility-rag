@@ -1,250 +1,210 @@
-# Green Card RAG Helper 🌍
+# Visa Eligibility RAG System
 
-A bilingual (English/Chinese) RAG-based assistant for answering immigration-related questions, powered by GPT-3.5-turbo and ChromaDB. Features automatic low-confidence question detection and expert review workflow for continuous improvement.
+A comprehensive, bilingual (English/Chinese) green card eligibility and case tracking system with AI-powered assistance.
 
-## 📚 Table of Contents
-- [Overview](#overview)
-- [Technologies Used](#technologies-used)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Low-Confidence Question Detection](#low-confidence-question-detection)
-- [Expert Review Workflow](#expert-review-workflow)
-- [API Endpoints](#api-endpoints)
-- [Documentation](#documentation)
-- [Visuals](#visuals)
-- [Support](#support)
-- [Roadmap](#roadmap)
-- [Project Status](#project-status)
-- [Contributing](#contributing)
-- [License](#license)
+## 🌟 **System Overview**
 
-## 🎯 Overview
-Green Card RAG Helper is an intelligent assistant designed to provide accurate, context-aware responses to immigration-related questions in both English and Chinese. Using Retrieval-Augmented Generation (RAG), it combines the power of vector search with language models to deliver precise, factual answers based on reliable immigration information.
+This application provides end-to-end support for green card applicants with two main components:
 
-**Key Features:**
-- **Bilingual Support**: English and Chinese question handling
-- **Confidence Scoring**: Automatic detection of low-confidence responses
-- **Expert Review System**: Professional validation of uncertain answers
-- **Anti-Bias Protection**: Source tracking and validation pipeline
-- **Continuous Learning**: Integration of expert-reviewed content into FAQ database
+### 🏠 **Dashboard Interface**
+- **Interactive Case Tracking**: Real-time progress monitoring with visual timelines
+- **Bilingual Support**: Full English and Chinese (Simplified) interface
+- **Smart Notifications**: Automated alerts for upcoming deadlines and requirements
+- **Document Management**: Centralized access to forms, checklists, and resources
+- **Mobile Responsive**: Optimized for desktop, tablet, and mobile devices
 
-## 🛠️ Technologies Used
-- **Language Model**: OpenAI GPT-3.5-turbo
-- **Vector Database**: ChromaDB
-- **Embeddings**: Multilingual E5 Base Model
-- **API**: FastAPI
-- **Backend**: Python 3.9+
-- **Caching**: Redis (with in-memory fallback)
-- **Testing**: pytest
-- **Dependencies Management**: pip
+### 🛠️ **Admin Portal**
+- **Case Management**: Comprehensive admin interface for updating case stages
+- **Real-time Updates**: One-click stage completion with automatic recalculation
+- **Analytics Dashboard**: Case overview and distribution statistics
+- **Estimation Engine**: AI-powered completion date predictions
 
-## 📋 Requirements
-- Python 3.9 or higher
-- OpenAI API key
-- 2GB+ free disk space for vector database
-- RAM: 4GB minimum, 8GB recommended
-- Internet connection for API calls
-- FastAPI and Uvicorn
-- Redis (optional, falls back to in-memory cache)
+## 🚀 **Quick Start**
 
-## 💻 Installation
-1. Clone the repository:
+### Prerequisites
+- Node.js 18+
+- npm or yarn
+
+### Installation & Setup
 ```bash
-git clone https://github.com/yourusername/green-card-rag-helper.git
-cd green-card-rag-helper
+# Clone the repository
+git clone <repository-url>
+cd visa-eligibility-rag
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-2. Install dependencies:
+### Access the System
+- **User Dashboard**: `http://localhost:3000`
+- **Admin Portal**: Click 🛠️ button → "Admin Portal" or visit `/admin`
+
+## 📊 **Features**
+
+### 🎯 **Dashboard Features**
+- ✅ **Case Summary Card** with progress visualization
+- ✅ **Interactive Timeline** with expandable details and tooltips
+- ✅ **Smart Alerts** with filtering (all, unread, important)
+- ✅ **Document Center** with FAQs and downloadable resources
+- ✅ **Bilingual Interface** (English/Chinese) with proper typography
+- ✅ **Mobile Responsive** design with adaptive navigation
+
+### 🔧 **Admin Portal Features**
+- ✅ **Case Overview** with stage distribution statistics
+- ✅ **One-Click Stage Updates** with automatic estimate recalculation
+- ✅ **Detailed Case Management** with comprehensive case information
+- ✅ **Notes and Audit Trail** for administrative tracking
+- ✅ **Real-time Synchronization** between admin and user interfaces
+
+### 🧠 **Intelligent Features**
+- ✅ **Estimation Engine** with visa type and processing center specific calculations
+- ✅ **Country-Specific Delays** for China/India-born applicants
+- ✅ **Confidence Levels** (high/medium/low) for predictions
+- ✅ **Dynamic Alerts** based on case status and upcoming deadlines
+- ✅ **Processing Time Analysis** using historical data patterns
+
+## 🗂️ **Case Tracking System**
+
+### **Stage Lifecycle** (10 Comprehensive Stages)
+1. **Form I-130/I-140 Filed** - Initial petition submission
+2. **USCIS Receipt Notice** - Confirmation received (1-3 weeks)
+3. **Biometrics Completed** - Fingerprints and photos (3-6 weeks)
+4. **EAD/AP Issued** - Work authorization (2-4 months)
+5. **Case Transferred** - Between USCIS offices (1-4 weeks)
+6. **Interview Scheduled** - Notice sent (3-10 months)
+7. **Interview Completed** - Adjustment interview (1-2 months)
+8. **Green Card Approved** - Final approval (1-2 weeks)
+9. **Green Card Produced** - Physical card creation (1-2 weeks)
+10. **Green Card Delivered** - Card delivery (3-7 days)
+
+### **Smart Estimation Algorithm**
+- **Historical Data Analysis**: Processing times by visa type and center
+- **Country Backlog Integration**: Automatic delay application for affected countries
+- **Dynamic Recalculation**: Real-time updates when stages are completed
+- **Confidence Assessment**: Based on data quality and case characteristics
+
+## 🏗️ **Technical Architecture**
+
+### **Frontend Stack**
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling with custom components
+- **React i18next** - Internationalization support
+- **Inter + Noto Sans SC** - Optimized typography for English/Chinese
+
+### **Backend Architecture**
+```
+src/
+├── app/api/tracking/          # RESTful API endpoints
+│   ├── cases/route.ts        # Case CRUD operations
+│   ├── stages/route.ts       # Stage management
+│   └── populate/route.ts     # Sample data management
+├── types/tracking.ts          # Comprehensive type definitions
+├── utils/estimationEngine.ts # AI prediction algorithms
+├── data/trackingConfig.ts     # Processing time configurations
+└── components/               # React components
+    ├── Dashboard.tsx         # Main user interface
+    ├── AdminPortal.tsx       # Admin management interface
+    └── [other components]    # Specialized UI components
+```
+
+### **Data Flow**
+```mermaid
+graph TD
+    A[User Dashboard] --> B[Tracking Data Adapter]
+    B --> C[Dashboard Components]
+    D[Admin Portal] --> E[API Layer]
+    E --> F[Estimation Engine]
+    F --> G[Case Data Store]
+    G --> B
+```
+
+## 📱 **Mobile Optimization**
+
+- **Responsive Design**: Mobile-first approach with breakpoints at 640px, 1024px
+- **Touch Interactions**: Optimized touch targets and gestures
+- **Adaptive Navigation**: Tab system becomes dropdown on mobile
+- **Typography Scaling**: Appropriate text sizes for different screen sizes
+- **Safe Area Support**: Handles device-specific safe areas
+
+## 🔗 **API Documentation**
+
+### **Key Endpoints**
 ```bash
-pip install -r requirements.txt
+# Case Management
+GET    /api/tracking/cases           # List all cases
+POST   /api/tracking/cases           # Create new case
+PUT    /api/tracking/cases?id=:id    # Update case
+
+# Stage Management  
+POST   /api/tracking/stages/complete # Mark stage complete
+GET    /api/tracking/stages/updates  # Get recent updates
+
+# Data Management (Demo)
+POST   /api/tracking/populate        # Populate sample data
+GET    /api/tracking/populate        # Check data status
 ```
 
-3. Set up environment variables:
+## 🧪 **Sample Data**
+
+The system includes 3 comprehensive sample cases for demonstration:
+- **EB-2 Case** (China-born, Stage 3 - Biometrics Completed)
+- **EB-1 Case** (India-born, Stage 7 - Interview Completed)
+- **EB-3 Case** (Philippines-born, Stage 2 - Receipt Notice)
+
+## 📋 **Current Status & Roadmap**
+
+### ✅ **Completed Features**
+- Full dashboard UI with all requested components
+- Complete admin portal with case management
+- Intelligent estimation engine with country-specific delays
+- Real-time updates and synchronization
+- Comprehensive sample data and documentation
+- Mobile-responsive design with proper internationalization
+
+### 🔄 **Future Enhancements** (Not Currently Implemented)
+- **Gantt Chart Timeline**: Interactive calendar view with Recharts
+- **Chatbot Integration**: Connection to existing RAG API
+- **User Comparison**: Statistical comparisons with other applicants
+- **Push Notifications**: Email/SMS notification system
+- **Database Integration**: Replace in-memory storage with persistent database
+- **Authentication System**: User and admin access control
+
+## 🛠️ **Development**
+
+### **Project Structure**
+```
+visa-eligibility-rag/
+├── src/app/                  # Next.js app directory
+├── src/components/           # React components
+├── src/types/               # TypeScript definitions
+├── src/utils/               # Utility functions
+├── src/data/                # Configuration and sample data
+├── README_DASHBOARD.md      # Dashboard documentation
+├── README_TRACKING_SYSTEM.md # Tracking system documentation
+└── package.json             # Dependencies and scripts
+```
+
+### **Development Commands**
 ```bash
-export OPENAI_API_KEY="your-api-key-here"
+npm run dev     # Start development server
+npm run build   # Build for production
+npm run start   # Start production server
+npm run lint    # Run linting
 ```
 
-4. (Optional) Install and start Redis for persistent caching:
-```bash
-# macOS
-brew install redis
-brew services start redis
+## 📝 **Documentation**
 
-# Ubuntu/Debian
-sudo apt-get install redis-server
-sudo systemctl start redis
-```
+- **[Dashboard Documentation](README_DASHBOARD.md)** - Comprehensive UI component guide
+- **[Tracking System Documentation](README_TRACKING_SYSTEM.md)** - Complete tracking system guide
 
-## 🚀 Usage
-1. Populate the vector database:
-```bash
-python populate_db.py
-```
+## 🤝 **Contributing**
 
-2. Run the API server:
-```bash
-uvicorn src.api.main:app --reload
-```
+This system provides a solid foundation for production green card case management with extensive customization possibilities based on specific organizational needs.
 
-3. API Endpoints:
-- `POST /query` - Submit immigration questions
-- `GET /health` - Check API health
-- `POST /cache/clear` - Clear all cached responses
-- `GET /cache/stats` - View cache statistics
+## 📄 **License**
 
-4. Example queries:
-```python
-from src.retrieval.retrieval_manager import RetrievalManager
-from src.llm.llm_manager import LLMManager
-
-retrieval_manager = RetrievalManager()
-llm_manager = LLMManager()
-
-# English query
-results = retrieval_manager.process_query("What documents do I need for EB-2?")
-response = llm_manager.generate_response(context, query)
-
-# Chinese query
-results = retrieval_manager.process_query("我需要哪些文件来申请 EB-2？")
-response = llm_manager.generate_response(context, query)
-```
-
-## 🔍 Low-Confidence Question Detection
-
-The system automatically detects when it's not confident in its responses and flags them for expert review.
-
-### How It Works:
-1. **Confidence Scoring**: Each response is evaluated based on:
-   - Context relevance to the question
-   - Source quality and official documentation
-   - Response length and completeness
-   - Presence of immigration-specific terminology
-
-2. **Automatic Flagging**: Questions with confidence scores below 0.7 are automatically flagged for expert review
-
-3. **Frequency Tracking**: Repeated low-confidence questions are prioritized for review
-
-### Confidence Factors:
-- **Context Relevance**: How well the retrieved context matches the question
-- **Source Quality**: Presence of official government sources
-- **Response Completeness**: Length and structure of the answer
-- **Immigration Terms**: Proper use of immigration-specific vocabulary
-
-## 👨‍💼 Expert Review Workflow
-
-### For Users:
-1. **Ask Questions**: Submit immigration questions normally
-2. **Get Responses**: Receive immediate answers with confidence scores
-3. **Transparency**: See if your question was flagged for expert review
-
-### For Experts:
-1. **Review Dashboard**: Access pending questions via `/expert/pending-questions`
-2. **Submit Reviews**: Provide professional answers with sources via `/expert/review`
-3. **Validation**: System validates reviews for bias and quality
-4. **Integration**: Approved answers are added to the FAQ database
-
-### Anti-Bias Features:
-- **Source Validation**: Requires official government sources
-- **Expert Credentials**: Tracks reviewer qualifications
-- **Audit Trail**: Complete history of all changes
-- **Quality Checks**: Validates answer length, relevance, and completeness
-
-## 🔌 API Endpoints
-
-### Core Endpoints
-- `POST /query` - Submit questions and get responses with confidence scores
-- `GET /health` - Check system health
-- `GET /cache/stats` - View caching statistics
-
-### Expert Review Endpoints
-- `GET /expert/pending-questions` - Get questions pending expert review
-- `GET /expert/question/{question_id}` - Get detailed question information
-- `POST /expert/review` - Submit expert review for a question
-- `GET /expert/stats` - Get expert review statistics
-
-### FAQ Integration Endpoints
-- `GET /faq/pending-integrations` - Get approved questions ready for FAQ integration
-- `POST /faq/integrate/{question_id}` - Integrate expert-reviewed question into FAQ
-- `GET /faq/validate/{question_id}` - Validate expert review for bias/issues
-- `GET /faq/integration-stats` - Get FAQ integration statistics
-
-### Example API Usage:
-```bash
-# Submit a question
-curl -X POST "http://localhost:8000/query" \
-  -H "Content-Type: application/json" \
-  -d '{"question": "What documents do I need for EB-2?", "language": "en"}'
-
-# Get pending expert reviews
-curl "http://localhost:8000/expert/pending-questions"
-
-# Submit expert review
-curl -X POST "http://localhost:8000/expert/review" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "question_id": "q_1_abc123",
-    "expert_answer": "For EB-2, you need Form I-140, medical examination, and police certificates.",
-    "expert_sources": ["uscis.gov/forms/i-140", "state.gov/visa"],
-    "expert_credentials": "Immigration Attorney, 10+ years experience",
-    "confidence_level": "high",
-    "notes": "Common question that needs clear guidance"
-  }'
-```
-
-## 📖 Documentation
-Detailed documentation is available in the following sections:
-- [src/embeddings/](src/embeddings/) - Embedding generation
-- [src/vector_db/](src/vector_db/) - Vector database operations
-- [src/retrieval/](src/retrieval/) - Query processing
-- [src/llm/](src/llm/) - Language model integration
-- [src/api/](src/api/) - API and confidence system
-
-## 📸 Visuals
-```
-User Query (EN/CN) → Vector Search → Context Retrieval → LLM Response → Confidence Scoring
-     ↓                    ↓              ↓                  ↓                ↓
-"EB-2 requirements" → Embeddings → Relevant Docs → Formatted Answer → Score: 0.85 ✅
-                                                                      Score: 0.45 ❌ → Expert Review
-```
-
-## 🆘 Support
-For support and questions:
-- Open an issue on GitHub
-- Email: ezhang0606@gmail.com
-- Documentation: [Wiki](https://github.com/yourusername/green-card-rag-helper/wiki)
-
-## 🗺️ Roadmap
-- [x] Basic RAG pipeline implementation
-- [x] Bilingual support (EN/CN)
-- [x] GPT-3.5-turbo integration
-- [x] Confidence scoring system
-- [x] Expert review workflow
-- [x] Anti-bias validation
-- [x] FAQ integration system
-- [ ] Web interface
-- [ ] Additional language support
-- [ ] Custom fine-tuned model
-- [ ] Mobile app
-
-## 📊 Project Status
-**Status**: Active Development
-
-Current focus:
-- Improving response accuracy through expert review
-- Expanding the knowledge base with validated content
-- Optimizing confidence scoring algorithms
-- Adding more comprehensive test coverage
-
-## 🤝 Contributing
-We welcome contributions! Please follow these steps:
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push to the branch
-5. Open a Pull Request
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
-
-## ⚖️ License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details. 
+[Add your license information here] 

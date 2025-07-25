@@ -1,88 +1,67 @@
 'use client';
 
-import React, { useState } from 'react';
-import { QuestionCard } from '../components/QuestionCard';
-import { ProgressIndicator } from '../components/ProgressIndicator';
-import { ResultCard } from '../components/ResultCard';
-import { LanguageToggle } from '../components/LanguageToggle';
-import { questions } from '../content/questions';
-import { categories } from '../content/categories';
-import { determineEligibility } from '../lib/eligibility';
+import React, { useState, useEffect } from 'react';
+import { Dashboard } from '../components/Dashboard';
+import { sampleTrackingCase } from '../data/sampleTrackingData';
+import { convertToCaseInfo, convertToTimelineSteps, generateAlertsFromTracking } from '../utils/trackingDataAdapter';
+import { sampleDocuments, sampleFAQs } from '../data/sampleData';
 import '../i18n/config';
 
 export default function Home() {
   const [currentLanguage, setCurrentLanguage] = useState('en');
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<string, boolean>>({});
-  const [showResults, setShowResults] = useState(false);
-
-  const handleAnswer = (answer: boolean) => {
-    const currentQuestion = questions[currentQuestionIndex];
-    setAnswers(prev => ({
-      ...prev,
-      [currentQuestion.id]: answer
-    }));
-
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1);
-    } else {
-      setShowResults(true);
-    }
-  };
-
-  const handleRestart = () => {
-    setCurrentQuestionIndex(0);
-    setAnswers({});
-    setShowResults(false);
-  };
+  const [showAdminLink, setShowAdminLink] = useState(false);
 
   const handleLanguageChange = (lang: string) => {
     setCurrentLanguage(lang);
   };
 
-  if (showResults) {
-    const category = categories.find(
-      cat => cat.id === determineEligibility(answers)
-    ) || categories[categories.length - 1]; // Default to CONSULT_ATTORNEY
-
-    return (
-      <main className="min-h-screen bg-gray-50 py-12 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="mb-8 flex justify-end">
-            <LanguageToggle
-              currentLanguage={currentLanguage}
-              onLanguageChange={handleLanguageChange}
-            />
-          </div>
-          <ResultCard
-            category={category}
-            currentLanguage={currentLanguage}
-            onRestart={handleRestart}
-          />
-        </div>
-      </main>
-    );
-  }
+  // Convert tracking data to dashboard format
+  const caseInfo = convertToCaseInfo(sampleTrackingCase);
+  const timelineSteps = convertToTimelineSteps(sampleTrackingCase);
+  const alerts = generateAlertsFromTracking(sampleTrackingCase);
 
   return (
-    <main className="min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-8 flex justify-end">
-          <LanguageToggle
-            currentLanguage={currentLanguage}
-            onLanguageChange={handleLanguageChange}
-          />
-        </div>
-        <ProgressIndicator
-          currentQuestion={currentQuestionIndex + 1}
-          totalQuestions={questions.length}
-        />
-        <QuestionCard
-          question={questions[currentQuestionIndex]}
-          onAnswer={handleAnswer}
-          currentLanguage={currentLanguage}
-        />
+    <div className="relative">
+      {/* Admin Link (for demo purposes) */}
+      <div className="fixed top-4 right-4 z-50">
+        <button
+          onClick={() => setShowAdminLink(!showAdminLink)}
+          className="bg-gray-800 text-white px-3 py-2 rounded-full text-sm hover:bg-gray-700 transition-colors"
+        >
+          🛠️
+        </button>
+        {showAdminLink && (
+          <div className="absolute right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg p-4 min-w-[200px]">
+            <h3 className="font-medium text-gray-900 mb-2">Admin Tools</h3>
+            <a 
+              href="/admin" 
+              className="block w-full text-left px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded"
+            >
+              🏛️ Admin Portal
+            </a>
+            <div className="border-t border-gray-200 my-2"></div>
+            <p className="text-xs text-gray-500">
+              Demo: Access admin portal to manage case stages
+            </p>
+          </div>
+        )}
       </div>
-    </main>
+
+      {/* Real-time Case Status Banner */}
+      <div className="bg-blue-600 text-white px-4 py-2 text-center text-sm">
+        📊 Case {sampleTrackingCase.case_number} • Stage {sampleTrackingCase.current_stage_id} • 
+        Next: {sampleTrackingCase.next_step_estimate.stage_name} (Est. {new Date(sampleTrackingCase.next_step_estimate.expected_date).toLocaleDateString()})
+      </div>
+
+      <Dashboard
+        currentLanguage={currentLanguage}
+        onLanguageChange={handleLanguageChange}
+        caseInfo={caseInfo}
+        timelineSteps={timelineSteps}
+        alerts={alerts}
+        documents={sampleDocuments}
+        faqs={sampleFAQs}
+      />
+    </div>
   );
 } 
